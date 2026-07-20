@@ -305,14 +305,14 @@
         
         <div class="game-nav">
             <div class="tabs-container">
-                <button class="tab-btn active" onclick="switchTab('tab-chat')">💬 聊天行動區</button>
-                <button class="tab-btn" onclick="switchTab('tab-char')">👤 角色與狀態</button>
-                <button class="tab-btn" onclick="switchTab('tab-memory')">🧠 記憶後臺</button>
+                <button class="tab-btn active" onclick="switchTab('tab-chat')">聊天行動區</button>
+                <button class="tab-btn" onclick="switchTab('tab-char')">角色與狀態</button>
+                <button class="tab-btn" onclick="switchTab('tab-memory')">記憶後臺</button>
             </div>
             <div class="sys-actions">
-                <button class="sys-btn" onclick="openModal('save')">💾 存檔管理</button>
-                <button class="sys-btn" onclick="openModal('load')">📂 讀取紀錄</button>
-                <button class="sys-btn" style="background:#e74c3c; border-color:#c0392b;" onclick="returnToSetup()">🔙 離開系統</button>
+                <button class="sys-btn" onclick="openModal('save')">存檔管理</button>
+                <button class="sys-btn" onclick="openModal('load')">讀取紀錄</button>
+                <button class="sys-btn" style="background:#e74c3c; border-color:#c0392b;" onclick="returnToSetup()">離開系統</button>
             </div>
         </div>
 
@@ -362,7 +362,7 @@
 
                 <!-- 艾柏特角色卡 -->
                 <div class="char-panel" style="border-top: 4px solid #9b59b6;">
-                    <h3 style="color: #9b59b6;">🦎 艾柏特·科摩多 (指導前輩)</h3>
+                    <h3 style="color: #9b59b6;">🦎 艾柏特·科摩多</h3>
                     <div class="character-card-content">
                         <p><strong style="color:#9b59b6;">年齡 / 職業：</strong>27 歲 / 第四區 S 級嚮導</p>
                         <p><strong style="color:#9b59b6;">種族 / 性別：</strong>科摩多巨蜥獸人 / Alpha</p>
@@ -580,7 +580,7 @@
         }
 
         function returnToSetup() {
-            if(confirm("返回首頁將會暫停當前進度。強烈建議先【存檔】。\n確定要返回嗎？")) {
+            if(confirm("返回首頁將會暫停當前進度。建議先【存檔】。\n確定要返回嗎？")) {
                 document.getElementById('game-screen').style.display = 'none';
                 document.getElementById('start-screen').style.display = 'flex';
             }
@@ -620,7 +620,7 @@
                 const btn = document.createElement('button');
                 btn.className = 'sys-btn';
                 btn.style.cssText = 'display:block; margin: 10px auto 0 auto; background:#e67e22; border-color:#d35400;';
-                btn.innerText = '🔄 重新嘗試連線';
+                btn.innerText = '重新嘗試連線';
                 btn.onclick = () => {
                     sys.remove(); 
                     requestAI(failedPrompt);
@@ -821,7 +821,7 @@ ${charData}${memorySection}${dynamicSection}
                 const memEl = document.getElementById('memory-text');
                 const newMem = `\n\n【第 ${page} 頁紀錄】：\n${summary.trim()}`;
                 memEl.value = (memEl.value + newMem).trim();
-                appendSystemText(`系統提示：第 ${page} 頁重要記憶已更新至【記憶後臺】。建議手動點擊左上角 [💾 存檔管理] 備份進度。`);
+                appendSystemText(`系統提示：第 ${page} 頁重要記憶已更新至【記憶後臺】。建議手動點擊左上角 [存檔管理] 備份進度。`);
             } catch(e) {
                 appendErrorWithRetry(`後台記憶整理失敗：${e.message}`, null);
             }
@@ -907,7 +907,7 @@ ${charData}${memorySection}${dynamicSection}
                     list.appendChild(div);
                 });
             } else if (mode === 'load') {
-                title.innerText = '📂 讀取存檔';
+                title.innerText = '讀取存檔';
                 if(saves.length === 0) {
                     list.innerHTML = '<div style="color:#8c8c8c; text-align:center; padding:20px 0;">目前沒有任何存檔。</div>';
                 } else {
