@@ -17,22 +17,29 @@
         .signboard { background: #1a1a24; color: #4db8ff; border: 2px solid #4db8ff; padding: 15px 30px; font-size: 2rem; font-weight: bold; letter-spacing: 5px; text-shadow: 0 0 10px rgba(77,184,255,0.5); border-radius: 5px; margin-bottom: 20px; box-shadow: 0 0 20px rgba(77,184,255,0.2); }
         .desk-top { width: 100%; height: 40px; background: #3d3d5c; border-radius: 5px 5px 0 0; border-top: 3px solid #2980b9; }
         .desk-front { width: 90%; height: 100px; background: #2a2a40; border-left: 2px solid #1e1e2f; border-right: 2px solid #1e1e2f; display: flex; justify-content: center; align-items: center; }
-        .typing-text { color: #a3a3c2; font-family: 'Courier New', Courier, monospace; font-size: 1.2rem; letter-spacing: 2px; white-space: nowrap; overflow: hidden; animation: typing 2s steps(30, end) forwards; width: 0; }
-        .skip-hint { position: absolute; bottom: 30px; right: 30px; color: #8c8c8c; font-size: 0.9rem; letter-spacing: 2px; animation: pulse 2s infinite; }
+        .typing-text { color: #a3a3c2; font-family: 'Courier New', Courier, monospace; font-size: 1.2rem; letter-spacing: 2px; white-space: nowrap; overflow: hidden; animation: typing 2s steps(30, end) forwards; width: 0; text-align: center;}
+        .skip-hint { position: absolute; bottom: 30px; right: 30px; color: #8c8c8c; font-size: 0.9rem; letter-spacing: 2px; animation: flash 1.5s infinite; font-weight:bold;}
         @keyframes typing { from { width: 0; } to { width: 100%; border-right: none; } }
-        @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+        @keyframes flash { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
 
         /* ================= 2. 起始頁面樣式 (公文風格大廳) ================= */
         #start-screen { display: none; flex-direction: column; align-items: center; justify-content: flex-start; height: 100vh; background-color: #1a1a24; overflow-y: auto; padding: 40px 20px; box-sizing: border-box; position: relative; }
         .lobby-title { color: #4db8ff; font-size: 2.2rem; letter-spacing: 5px; margin-bottom: 30px; text-shadow: 0 0 10px rgba(77,184,255,0.3); border-bottom: 2px solid #3d3d5c; padding-bottom: 15px; width: 100%; max-width: 1300px; text-align: center;}
         
-        /* 隱藏的浮水印：點擊進入維修區 */
-        .admin-watermark { position: absolute; top: 15px; right: 20px; font-family: 'Courier New', Courier, monospace; font-size: 0.8rem; color: rgba(255,255,255,0.1); cursor: pointer; letter-spacing: 2px; transition: 0.3s; user-select: none; }
-        .admin-watermark:hover { color: rgba(77,184,255,0.8); text-shadow: 0 0 8px rgba(77,184,255,0.5); }
+        /* 浮水印圖示 (無文字、高亮度) */
+        .admin-watermark { 
+            position: absolute; top: 20px; right: 30px; cursor: pointer; 
+            color: rgba(77, 184, 255, 0.5); transition: 0.3s; 
+            filter: drop-shadow(0 0 8px rgba(77,184,255,0.3));
+        }
+        .admin-watermark:hover { 
+            color: #4db8ff; 
+            filter: drop-shadow(0 0 15px rgba(77,184,255,1)) brightness(1.5); 
+            transform: scale(1.1) rotate(90deg); 
+        }
 
         .lobby-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; width: 100%; max-width: 1300px; margin-bottom: 30px; }
         
-        /* 公文紙風格優化字體 */
         .paper-panel { background-color: #f4f1ea; color: #2c3e50; border-radius: 3px; box-shadow: 2px 4px 15px rgba(0,0,0,0.4); padding: 30px; display: flex; flex-direction: column; position: relative; border: 1px solid #dcd3c6; }
         .paper-panel h2 { color: #2c3e50; font-size: 1.4rem; margin-top: 0; margin-bottom: 20px; border-bottom: 3px double #2c3e50; padding-bottom: 10px; font-weight: bold; letter-spacing: 1px; }
         
@@ -51,7 +58,7 @@
         .start-btn:disabled { background-color: #3d3d5c; color: #8c8c8c; cursor: not-allowed; }
         .locked-panel { opacity: 0.5; pointer-events: none; position: relative; filter: grayscale(50%); }
         
-        /* ================= 3. 遊戲介面 (分頁式) ================= */
+        /* ================= 3. 遊戲介面 ================= */
         #game-screen { display: none; width: 100%; height: 100vh; flex-direction: column; background-color: #1e1e2f; }
         
         .game-nav { height: 60px; background-color: #1a1a24; display: flex; align-items: center; padding: 0 20px; border-bottom: 2px solid #3d3d5c; justify-content: space-between; }
@@ -67,10 +74,8 @@
         .tab-content { display: none; flex-grow: 1; overflow-y: auto; }
         .tab-content.active { display: flex; }
         
-        /* [標籤 1] 聊天行動區 (防重疊排版) */
         #tab-chat { flex-direction: row; }
         
-        /* 左側固定狀態區 */
         .left-mini-status { width: 240px; background-color: #1a1a24; border-right: 2px solid #3d3d5c; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto; }
         .left-mini-status h4 { margin: 0 0 15px 0; color: #4db8ff; border-bottom: 2px solid #3d3d5c; padding-bottom: 10px; font-size: 1.1rem; }
         .status-row { margin: 10px 0; font-size: 0.95rem; display: flex; flex-direction: column; background: #222230; padding: 10px; border-radius: 5px; border: 1px solid #2a2a40; }
@@ -79,7 +84,6 @@
         .val-highlight { color: #f39c12 !important; font-weight: bold; font-size: 1.1rem;}
         .val-interest { color: #e74c3c !important; font-weight: bold; font-size: 1.1rem;}
 
-        /* 右側聊天主視窗 */
         .chat-main-area { flex-grow: 1; display: flex; flex-direction: column; position: relative; min-width: 0; }
         #chat-box { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; scroll-behavior: smooth; }
         .message { max-width: 85%; padding: 15px; border-radius: 8px; line-height: 1.7; font-size: 1.05rem; letter-spacing: 0.5px;}
@@ -92,9 +96,8 @@
         #send-btn { padding: 0 30px; background-color: #4db8ff; color: #1e1e2f; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1.1rem; transition: 0.2s; }
         #send-btn:hover { background-color: #2980b9; color: #fff; }
 
-        /* [標籤 2] 角色資料與狀態區 */
         .char-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; padding: 20px; width: 100%; box-sizing: border-box; }
-        .char-panel { background: #2a2a40; border-radius: 8px; padding: 20px; border: 1px solid #3d3d5c; display: flex; flex-direction: column; max-height: calc(100vh - 100px); }
+        .char-panel { background: #2a2a40; border-radius: 8px; padding: 25px; border: 1px solid #3d3d5c; display: flex; flex-direction: column; max-height: calc(100vh - 100px); }
         .char-panel h3 { color: #4db8ff; margin-top: 0; border-bottom: 2px solid #3d3d5c; padding-bottom: 10px; font-size: 1.2rem; letter-spacing: 1px;}
         
         .status-history-container { flex-grow: 1; overflow-y: auto; padding-right: 10px; display: flex; flex-direction: column; gap: 15px; }
@@ -102,14 +105,15 @@
         .hist-box div { border-bottom: 1px dashed #3d3d5c; padding-bottom: 4px; }
         .hist-box span.lbl { color: #a3a3c2; font-weight: bold; margin-right: 5px; }
 
-        .readonly-field { background: #12121a; border: 1px solid #3d3d5c; padding: 10px; border-radius: 5px; color: #dcdcdc; font-size: 0.95rem; min-height: 20px; margin-bottom: 15px; line-height: 1.5;}
-        .readonly-label { color: #4db8ff; font-weight: bold; font-size: 0.85rem; margin-bottom: 5px; display: block; }
+        /* 統一角色卡版型設計 */
+        .character-card-content { color: #dcdcdc; font-size: 0.95rem; line-height: 1.7; flex-grow: 1; overflow-y: auto; padding-right: 10px;}
+        .character-card-content p { margin: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px;}
+        .character-card-content strong { color: #4db8ff; }
         
         .npc-card { background: #1e1e2f; padding: 15px; border-radius: 5px; margin-bottom: 15px; border-left: 4px solid #9b59b6; }
         .npc-card h4 { margin: 0 0 10px 0; color: #9b59b6; }
         .npc-card p { margin: 0; font-size: 0.95rem; color: #dcdcdc; line-height: 1.6; }
 
-        /* [標籤 3] 記憶編輯區 */
         #tab-memory { padding: 20px; flex-direction: column; }
         .memory-info { padding: 15px; font-size: 0.95rem; color: #a3a3c2; background: #222230; border-radius: 5px; border: 1px solid #3d3d5c; margin-bottom: 15px; line-height: 1.5; }
         #memory-text { flex-grow: 1; background-color: #12121a; border: 1px solid #3d3d5c; border-radius: 5px; color: #dcdcdc; padding: 20px; font-family: inherit; font-size: 1.05rem; line-height: 1.7; resize: none; outline: none; margin-bottom: 15px; }
@@ -119,7 +123,7 @@
         .spinner { width: 20px; height: 20px; border: 3px solid #3d3d5c; border-top-color: #4db8ff; border-radius: 50%; animation: spin 1s linear infinite; }
         .system-text { color: #8c8c8c; font-size: 0.9rem; text-align: center; margin: 10px 0; font-style: italic; letter-spacing: 1px; }
 
-        /* ================= 4. Modal (存檔/驗證/維修) 共用樣式 ================= */
+        /* ================= 4. Modal (存檔/驗證/維修) ================= */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.85); z-index: 10000; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .modal-box { background: #1a1a24; border: 1px solid #4db8ff; border-radius: 10px; display: flex; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.8); overflow: hidden; }
         .modal-header { padding: 20px; border-bottom: 1px solid #3d3d5c; color: #4db8ff; font-size: 1.3rem; font-weight: bold; display: flex; align-items: center; justify-content: space-between; }
@@ -127,13 +131,11 @@
         .modal-footer { padding: 20px; border-top: 1px solid #3d3d5c; display: flex; justify-content: flex-end; gap: 10px; }
         .modal-input { padding: 12px; background: #12121a; border: 1px solid #4db8ff; color: #fff; border-radius: 5px; outline: none; width: 100%; box-sizing: border-box; font-family: inherit; font-size: 1rem;}
         
-        /* 存檔列表專用 */
-        #sl-list { max-height: 300px; overflow-y: auto; display: flex; flex-direction: column; gap: 5px; }
-        .sl-item { background: #1e1e2f; padding: 12px; border: 1px solid #3d3d5c; border-radius: 4px; cursor: pointer; color: #dcdcdc; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; }
+        #sl-list { max-height: 300px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+        .sl-item { background: #1e1e2f; padding: 12px; border: 1px solid #3d3d5c; border-radius: 4px; color: #dcdcdc; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; }
         .sl-item:hover { border-color: #4db8ff; background: #222230; }
-        .sl-item-name { font-weight: bold; font-size: 1.05rem; }
-
-        /* 維修區專用 */
+        .sl-item-name { font-weight: bold; font-size: 1.05rem; cursor: pointer; flex-grow: 1;}
+        
         .admin-box { width: 95%; max-width: 900px; height: 90vh; }
         .admin-label { color: #a3a3c2; font-weight: bold; margin-bottom: 5px; font-size: 1rem; display: block;}
         .admin-textarea { width: 100%; height: 350px; background: #12121a; color: #dcdcdc; border: 1px solid #3d3d5c; border-radius: 5px; padding: 15px; font-family: inherit; font-size: 1rem; line-height: 1.7; resize: vertical; outline: none; box-sizing: border-box; }
@@ -144,7 +146,7 @@
 
     <!-- ================= 存讀檔 Modal ================= -->
     <div id="sl-modal" class="modal-overlay">
-        <div class="modal-box" style="width: 450px;">
+        <div class="modal-box" style="width: 500px;">
             <div class="modal-header" id="sl-title">檔案管理</div>
             <div class="modal-body">
                 <div id="sl-list"></div>
@@ -161,6 +163,7 @@
         <div class="modal-box" style="width: 400px; border-color: #9b59b6;">
             <div class="modal-header" style="color: #9b59b6;" id="auth-title">系統驗證</div>
             <div class="modal-body">
+                <p style="font-size:0.85rem; color:#a3a3c2; margin-top:0;">密碼儲存於本地瀏覽器端，實現實體隔離與安全加密。</p>
                 <input type="password" id="admin-pwd-input" class="modal-input" style="border-color: #9b59b6;" placeholder="請輸入密碼...">
             </div>
             <div class="modal-footer">
@@ -170,15 +173,19 @@
         </div>
     </div>
 
-    <!-- ================= 維修區 Modal (設定艾柏特) ================= -->
+    <!-- ================= 維修區 Modal ================= -->
     <div id="admin-modal" class="modal-overlay">
         <div class="modal-box admin-box" style="border-color: #9b59b6;">
             <div class="modal-header" style="color: #9b59b6;">
-                ⚙️ 後台資料維修區 - 艾柏特核心設定 (System Prompt)
+                ⚙️ 後台資料維修區 - 艾柏特核心設定
             </div>
             <div class="modal-body">
                 <div>
-                    <label class="admin-label">在此編寫艾柏特的背景、性格、外貌與所有強制設定。此區塊會直接插入 AI 的核心大腦中。</label>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <label class="admin-label" style="margin:0;">請於下方編輯艾柏特的基本資料、性格與設定：</label>
+                        <input type="file" id="admin-file-upload" accept=".txt" style="display:none;" onchange="loadAdminFile(event)">
+                        <button class="sys-btn" style="background:#8e44ad; border-color:#9b59b6;" onclick="document.getElementById('admin-file-upload').click()">📂 匯入 TXT 檔案</button>
+                    </div>
                     <textarea id="admin-albert-prompt" class="admin-textarea"></textarea>
                 </div>
             </div>
@@ -189,7 +196,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- ================= 1. 開場動畫 ================= -->
     <div id="intro-screen">
@@ -205,10 +211,15 @@
         <div class="skip-hint">點擊畫面任意處進入大廳</div>
     </div>
 
-    <!-- ================= 2. 起始頁面 (文書風格大廳) ================= -->
+    <!-- ================= 2. 起始頁面 (大廳) ================= -->
     <div id="start-screen">
-        <!-- 隱藏的維修區入口 -->
-        <div class="admin-watermark" onclick="openAdminAuth()">[SYS_MAINTENANCE]</div>
+        <!-- SVG 發光齒輪浮水印 -->
+        <div class="admin-watermark" onclick="openAdminAuth()" title="進入系統維護區">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+        </div>
 
         <div class="lobby-title">第四區入職報到系統</div>
         
@@ -287,7 +298,7 @@
         <button type="button" id="main-start-btn" class="start-btn" disabled onclick="startGame()">表單繳交完畢，進入第四區</button>
     </div>
 
-    <!-- ================= 3. 遊戲介面 (標籤分頁式) ================= -->
+    <!-- ================= 3. 遊戲介面 ================= -->
     <div id="game-screen">
         
         <div class="game-nav">
@@ -306,7 +317,6 @@
         <!-- [標籤 1] 聊天行動區 -->
         <div id="tab-chat" class="tab-content active">
             
-            <!-- 左側固定迷你狀態欄 -->
             <div class="left-mini-status">
                 <h4>即時狀態</h4>
                 <div class="status-row"><span class="lbl">時間</span><span class="val" id="mini-time">未知</span></div>
@@ -316,14 +326,9 @@
                 <div class="status-row"><span class="lbl">進度</span><span class="val">第 <span id="mini-page">0</span> 頁</span></div>
             </div>
 
-            <!-- 右側聊天主視窗 -->
             <div class="chat-main-area">
                 <div id="chat-box"></div>
-                
-                <div id="loading-indicator">
-                    <div class="spinner"></div> <span>系統運算中，請稍候...</span>
-                </div>
-
+                <div id="loading-indicator"><div class="spinner"></div> <span>系統運算中，請稍候...</span></div>
                 <div id="input-area">
                     <textarea id="player-input" placeholder="輸入您的行動，按 [Enter] 換行，按下 [Alt + Enter] 傳送..."></textarea>
                     <button id="send-btn">傳送<br><span style="font-size: 0.8rem; font-weight:normal; opacity:0.8;">Alt+Enter</span></button>
@@ -335,51 +340,53 @@
         <div id="tab-char" class="tab-content">
             <div class="char-grid">
                 
-                <!-- 左欄：狀態紀錄面板 -->
+                <!-- 玩家角色卡 -->
+                <div class="char-panel">
+                    <h3>📝 玩家角色卡 (已鎖定)</h3>
+                    <div class="character-card-content">
+                        <p><strong>姓名 / 年齡：</strong><span id="game-name"></span> / <span id="game-age"></span></p>
+                        <p><strong>種族 / 性別：</strong><span id="game-species"></span> / <span id="game-abo"></span></p>
+                        <p id="game-pheromone-group"><strong>信息素：</strong><span id="game-pheromone"></span></p>
+                        <p><strong>外貌特徵：</strong><span id="game-look"></span></p>
+                        <p><strong>精神體：</strong><span id="game-spirit"></span></p>
+                        <p><strong>精神圖景：</strong><span id="game-mind"></span></p>
+                        <p><strong>哨兵等級：</strong><span id="game-level"></span></p>
+                        <p><strong>特殊能力：</strong><span id="game-ability"></span></p>
+                    </div>
+                    
+                    <h3 style="margin-top: 20px; border-color: #2ecc71; color: #2ecc71;">✨ 當前狀態與變化</h3>
+                    <textarea id="game-dynamic-status" style="width: 100%; height: 120px; background: #12121a; color: #dcdcdc; border: 1px solid #3d3d5c; border-radius: 5px; padding: 10px; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: none; outline: none;" placeholder="劇情推進中發生的身體、心理或關係變化將記錄於此... 您也可以手動備註。"></textarea>
+                </div>
+
+                <!-- 艾柏特角色卡 -->
+                <div class="char-panel" style="border-top: 4px solid #9b59b6;">
+                    <h3 style="color: #9b59b6;">🦎 艾柏特·科摩多 (指導前輩)</h3>
+                    <div class="character-card-content">
+                        <p><strong style="color:#9b59b6;">年齡 / 職業：</strong>27 歲 / 第四區 S 級嚮導</p>
+                        <p><strong style="color:#9b59b6;">種族 / 性別：</strong>科摩多巨蜥獸人 / Alpha</p>
+                        <p><strong style="color:#9b59b6;">信息素：</strong>皮革混著鐵鏽的氣味</p>
+                        <p><strong style="color:#9b59b6;">外貌特徵：</strong>身高 196cm。銀色側分漸層髮型，藍灰色眼睛。帶有鱗片覆蓋，分叉長舌與鋸齒狀尖牙。</p>
+                        <p><strong style="color:#9b59b6;">性格：</strong>表面幽默輕浮、嘴巴很毒，但其實非常細心且極度寵溺後輩。面對危機極度謹慎。</p>
+                        <p><strong style="color:#9b59b6;">特殊能力：</strong>喜好揮舞雙斧的近戰狂，口腔帶有神經毒腺。能施放範圍「毒沼」與抵擋攻擊的「保護盾」。</p>
+                    </div>
+                    
+                    <h3 style="margin-top: 20px; color:#e67e22; border-color:#e67e22;">👥 周邊角色介紹</h3>
+                    <div class="npc-card" style="border-color: #e67e22;">
+                        <h4 style="color:#e67e22;">葛斯特 (Ghost) - 精神體</h4>
+                        <p>艾柏特的精神體，一隻 26cm 長的變色龍。有著又呆又睿智的眼神，隱匿能力極強。常被派去惡作劇，或潛伏監視玩家。</p>
+                    </div>
+                    <div class="npc-card" style="border-color: #e67e22;">
+                        <h4 style="color:#e67e22;">第四區同僚 / 教官</h4>
+                        <p>對艾柏特不按牌理出牌的狂野作風、以及對黏牙甜食的極度嫌棄感到無奈，但認可其強大實力。</p>
+                    </div>
+                </div>
+
+                <!-- 歷史狀態紀錄面板 -->
                 <div class="char-panel">
                     <h3>📊 歷史狀態紀錄</h3>
                     <p style="font-size:0.9rem; color:#8c8c8c; margin-top:0;">(每達25頁記憶整理後，僅保留最後兩筆紀錄)</p>
                     <div id="status-history-container" class="status-history-container">
                         <div class="hist-box" style="display:block; text-align:center; color:#a3a3c2; border:none;">等待系統連線以獲取狀態...</div>
-                    </div>
-                </div>
-
-                <!-- 中欄：玩家角色卡 (唯讀) -->
-                <div class="char-panel">
-                    <h3>📝 玩家角色卡 (已鎖定)</h3>
-                    <div style="flex-grow: 1; overflow-y: auto; padding-right: 15px;">
-                        <div><span class="readonly-label">姓名</span><div class="readonly-field" id="game-name"></div></div>
-                        <div><span class="readonly-label">年齡</span><div class="readonly-field" id="game-age"></div></div>
-                        <div><span class="readonly-label">外貌</span><div class="readonly-field" id="game-look" style="white-space: pre-wrap;"></div></div>
-                        <div><span class="readonly-label">種族/性別</span><div class="readonly-field" id="game-species"></div></div>
-                        <div><span class="readonly-label">二分化性別 (ABO)</span><div class="readonly-field" id="game-abo"></div></div>
-                        <div id="game-pheromone-group"><span class="readonly-label">信息素</span><div class="readonly-field" id="game-pheromone"></div></div>
-                        <div><span class="readonly-label">精神體</span><div class="readonly-field" id="game-spirit"></div></div>
-                        <div><span class="readonly-label">精神圖景</span><div class="readonly-field" id="game-mind"></div></div>
-                        <div><span class="readonly-label">等級</span><div class="readonly-field" id="game-level"></div></div>
-                        <div><span class="readonly-label">特殊能力</span><div class="readonly-field" id="game-ability" style="white-space: pre-wrap;"></div></div>
-                    </div>
-                </div>
-
-                <!-- 右欄：艾柏特與 NPC 介紹 -->
-                <div class="char-panel" style="border-top: 4px solid #9b59b6;">
-                    <h3>🦎 艾柏特·科摩多 (指導前輩)</h3>
-                    <div style="color: #dcdcdc; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
-                        <p><strong>年齡 / 職業：</strong>27 歲 / 第四區 S 級嚮導</p>
-                        <p><strong>種族 / 性別：</strong>科摩多巨蜥獸人 / Alpha</p>
-                        <p><strong>信息素：</strong>皮革混著鐵鏽的氣味</p>
-                        <p><strong>外貌特徵：</strong>身高 196cm。銀色側分漸層髮型，藍灰色眼睛。帶有鱗片覆蓋，分叉長舌與鋸齒狀尖牙。</p>
-                        <p><strong>性格：</strong>表面幽默輕浮、嘴巴很毒，但其實非常細心且極度寵溺後輩。面對危機極度謹慎。</p>
-                        <p><strong>特殊能力：</strong>喜好揮舞雙斧的近戰狂，口腔帶有神經毒腺。能施放範圍「毒沼」與抵擋攻擊的「保護盾」。</p>
-                    </div>
-                    <h3>👥 周邊角色介紹</h3>
-                    <div class="npc-card">
-                        <h4>葛斯特 (Ghost) - 精神體</h4>
-                        <p>艾柏特的精神體，一隻 26cm 長的變色龍。有著又呆又睿智的眼神，隱匿能力極強。常派去惡作劇，或在信任度較低時潛伏監視玩家。</p>
-                    </div>
-                    <div class="npc-card">
-                        <h4>第四區同僚 / 教官</h4>
-                        <p>包含其他的哨兵與嚮導。對艾柏特不按牌理出牌的狂野作風、以及對黏牙甜食的極度嫌棄感到無奈，但認可其強大實力。</p>
                     </div>
                 </div>
             </div>
@@ -412,14 +419,14 @@
         let customAlbertPrompt = localStorage.getItem('admin_albert_prompt') || defaultAlbertPrompt;
 
         // =========================================================
-        // 模態框共用控制器 (Modal Controller)
+        // 模態框共用控制器
         // =========================================================
         function closeModals() {
             document.querySelectorAll('.modal-overlay').forEach(el => el.style.display = 'none');
         }
 
         // =========================================================
-        // 後台維修區邏輯 (Admin Auth & Panel)
+        // 後台維修區邏輯
         // =========================================================
         function openAdminAuth() {
             const pwd = localStorage.getItem('admin_pwd');
@@ -467,11 +474,19 @@
             closeModals();
         }
 
-        // 綁定驗證輸入框的 Enter 鍵
+        function loadAdminFile(e) {
+            const file = e.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('admin-albert-prompt').value += '\n\n' + event.target.result;
+            };
+            reader.readAsText(file);
+        }
+
         document.getElementById('admin-pwd-input').addEventListener('keydown', (e) => {
             if(e.key === 'Enter') verifyAdmin();
         });
-
 
         // ---------------------------------------------------------
         // 1. 動畫跳過邏輯
@@ -480,11 +495,8 @@
         const startScreen = document.getElementById('start-screen');
         
         introScreen.addEventListener('click', () => {
-            introScreen.style.opacity = '0';
-            setTimeout(() => {
-                introScreen.style.display = 'none';
-                startScreen.style.display = 'flex';
-            }, 500); 
+            introScreen.style.display = 'none';
+            startScreen.style.display = 'flex';
         });
 
         // ---------------------------------------------------------
@@ -493,13 +505,9 @@
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-            
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
-            
-            if(tabId === 'tab-chat') {
-                document.getElementById('player-input').focus();
-            }
+            if(tabId === 'tab-chat') document.getElementById('player-input').focus();
         }
 
         // ---------------------------------------------------------
@@ -576,10 +584,8 @@
             fields.forEach(f => {
                 const val = document.getElementById(`start-${f}`).value.trim();
                 if(!val && f !== 'pheromone') isValid = false; 
-                // 填入遊戲區的唯讀欄位
                 document.getElementById(`game-${f}`).innerText = val;
             });
-            // 處理遊戲介面中 Beta 信息素的隱藏
             const gameAbo = document.getElementById('game-abo').innerText;
             if(gameAbo === 'Beta') {
                 document.getElementById('game-pheromone-group').style.display = 'none';
@@ -611,7 +617,6 @@
                 };
                 sys.appendChild(btn);
             }
-
             chatBox.appendChild(sys);
             chatBox.scrollTop = chatBox.scrollHeight;
         }
@@ -638,7 +643,7 @@
         }
 
         // ---------------------------------------------------------
-        // 4. AI 互動與邏輯 (引入維修區自訂 Prompt)
+        // 4. AI 互動與邏輯
         // ---------------------------------------------------------
         
         function buildSystemPrompt() {
@@ -655,6 +660,9 @@
 
             const memoryText = document.getElementById('memory-text').value.trim();
             const memorySection = memoryText ? `\n\n【背景記憶點】：\n${memoryText}` : "";
+            
+            const dynamicStatus = document.getElementById('game-dynamic-status').value.trim();
+            const dynamicSection = dynamicStatus ? `\n\n【玩家當前特殊狀態/劇情變動】：\n${dynamicStatus}` : "";
 
             return `你是艾柏特·科摩多世界中的旁白敘述者，專責描述劇情發展、角色動作、心理變化與空間氛圍。
 你不扮演玩家角色，也不以第一人稱參與事件，而是以小說體形式，從第三人稱視角為使用者開展完整的虛構世界體驗。
@@ -663,8 +671,10 @@
 【防 OOC 角色強制設定 - 艾柏特·科摩多 (Albert Komodo)】：
 ${customAlbertPrompt}
 
-【當前玩家角色卡資料】：
-${charData}${memorySection}
+【當前玩家原始角色卡資料 (絕對不可變動基礎設定)】：
+${charData}${memorySection}${dynamicSection}
+
+玩家的原始角色卡設定不可更動，但隨著劇情推進，玩家可能會出現生理或心理的細微變化（例如受到信息素影響、受傷、建立連結等）。請在對話中自然體現這些變動，但不可覆蓋初始設定。
 
 在每則回覆的最底下，務必包含以下狀態欄格式（請嚴格依照此格式輸出）：
 日期｜ YY/MM/DD 
@@ -759,7 +769,6 @@ ${charData}${memorySection}
                 }
                 renderStatusUI();
             }
-
             return text.replace(/日期｜[\s\S]*?(?=頁碼｜)頁碼｜.*?(?:\n|$)/g, '').trim();
         }
 
@@ -767,14 +776,12 @@ ${charData}${memorySection}
             if (statusHistoryLog.length === 0) return;
             const latest = statusHistoryLog[statusHistoryLog.length - 1];
 
-            // 迷你面板
             document.getElementById('mini-time').innerText = latest.time;
             document.getElementById('mini-loc').innerText = latest.loc;
             document.getElementById('mini-trust').innerText = latest.trust;
             document.getElementById('mini-interest').innerText = latest.interest;
             document.getElementById('mini-page').innerText = latest.page;
 
-            // 歷史狀態面板
             const container = document.getElementById('status-history-container');
             container.innerHTML = '';
             statusHistoryLog.forEach(st => {
@@ -806,7 +813,7 @@ ${charData}${memorySection}
                 memEl.value = (memEl.value + newMem).trim();
                 appendSystemText(`系統提示：第 ${page} 頁重要記憶已更新至【記憶後臺】。建議手動點擊左上角 [💾 存檔管理] 備份進度。`);
             } catch(e) {
-                appendSystemText(`後台記憶整理失敗：${e.message}`);
+                appendErrorWithRetry(`後台記憶整理失敗：${e.message}`, null);
             }
         }
         
@@ -858,7 +865,7 @@ ${charData}${memorySection}
         }
 
         // ---------------------------------------------------------
-        // 5. 存檔與讀檔 (自訂名稱 Modal)
+        // 5. 存檔與讀檔 (含刪除功能)
         // ---------------------------------------------------------
         function openModal(mode) {
             const modal = document.getElementById('sl-modal');
@@ -882,8 +889,11 @@ ${charData}${memorySection}
                     const name = k.replace('sentrySave_', '');
                     const div = document.createElement('div');
                     div.className = 'sl-item';
-                    div.innerHTML = `<span class="sl-item-name">${name}</span><span style="font-size:0.85rem; color:#f39c12;">(點擊帶入檔名)</span>`;
-                    div.onclick = () => { document.getElementById('save-name-input').value = name; };
+                    div.innerHTML = `<span class="sl-item-name" onclick="document.getElementById('save-name-input').value = '${name}';">${name}</span>
+                                     <div>
+                                         <span style="font-size:0.85rem; color:#f39c12; cursor:pointer;" onclick="document.getElementById('save-name-input').value = '${name}';">(點擊帶入檔名)</span>
+                                         <span style="color:#e74c3c; cursor:pointer; margin-left:10px;" onclick="deleteSave('${name}', event)" title="刪除檔案">🗑️</span>
+                                     </div>`;
                     list.appendChild(div);
                 });
             } else if (mode === 'load') {
@@ -895,11 +905,22 @@ ${charData}${memorySection}
                         const name = k.replace('sentrySave_', '');
                         const div = document.createElement('div');
                         div.className = 'sl-item';
-                        div.innerHTML = `<span class="sl-item-name">${name}</span><span style="color:#2ecc71;">讀取 ➔</span>`;
-                        div.onclick = () => executeLoad(name);
+                        div.innerHTML = `<span class="sl-item-name" onclick="executeLoad('${name}')">${name}</span>
+                                         <div>
+                                            <span style="color:#2ecc71; cursor:pointer; margin-right:10px;" onclick="executeLoad('${name}')">讀取 ➔</span>
+                                            <span style="color:#e74c3c; cursor:pointer;" onclick="deleteSave('${name}', event)" title="刪除檔案">🗑️</span>
+                                         </div>`;
                         list.appendChild(div);
                     });
                 }
+            }
+        }
+
+        function deleteSave(name, event) {
+            event.stopPropagation();
+            if(confirm(`確定要刪除存檔 [${name}] 嗎？此動作無法復原。`)) {
+                localStorage.removeItem('sentrySave_' + name);
+                openModal(document.getElementById('sl-title').innerText.includes('讀取') ? 'load' : 'save'); // 刷新列表
             }
         }
 
@@ -914,6 +935,7 @@ ${charData}${memorySection}
                     geminiApiKey, localApiUrl, localModelName,
                     chatHistory, lastSummarizedPage, statusHistoryLog,
                     memoryText: document.getElementById('memory-text').value,
+                    dynamicStatus: document.getElementById('game-dynamic-status').value,
                     charData: {
                         name: document.getElementById('game-name').innerText,
                         age: document.getElementById('game-age').innerText,
@@ -948,14 +970,12 @@ ${charData}${memorySection}
                 statusHistoryLog = data.statusHistoryLog || [];
                 isApiConfirmed = true; 
                 
-                // 還原角色卡資料
                 const fields = ['name', 'age', 'look', 'species', 'abo', 'pheromone', 'spirit', 'mind', 'level', 'ability'];
                 fields.forEach(f => {
                     if(document.getElementById(`start-${f}`)) document.getElementById(`start-${f}`).value = data.charData[f];
                     if(document.getElementById(`game-${f}`)) document.getElementById(`game-${f}`).innerText = data.charData[f];
                 });
                 
-                // 處理隱藏 Beta 信息素
                 if(document.getElementById('start-abo')) togglePheromoneField();
                 if(data.charData['abo'] === 'Beta' && document.getElementById('game-pheromone-group')) {
                     document.getElementById('game-pheromone-group').style.display = 'none';
@@ -964,6 +984,7 @@ ${charData}${memorySection}
                 }
                 
                 if(document.getElementById('memory-text')) document.getElementById('memory-text').value = data.memoryText || "";
+                if(document.getElementById('game-dynamic-status')) document.getElementById('game-dynamic-status').value = data.dynamicStatus || "";
 
                 if(document.getElementById('chat-box')) {
                     chatBox.innerHTML = '';
