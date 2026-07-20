@@ -26,7 +26,6 @@
         #start-screen { display: none; flex-direction: column; align-items: center; justify-content: flex-start; height: 100vh; background-color: #1a1a24; overflow-y: auto; padding: 40px 20px; box-sizing: border-box; position: relative; }
         .lobby-title { color: #4db8ff; font-size: 2.2rem; letter-spacing: 5px; margin-bottom: 30px; text-shadow: 0 0 10px rgba(77,184,255,0.3); border-bottom: 2px solid #3d3d5c; padding-bottom: 15px; width: 100%; max-width: 1300px; text-align: center;}
         
-        /* 浮水印圖示 (無文字、高亮度) */
         .admin-watermark { 
             position: absolute; top: 20px; right: 30px; cursor: pointer; 
             color: rgba(77, 184, 255, 0.5); transition: 0.3s; 
@@ -40,7 +39,7 @@
 
         .lobby-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; width: 100%; max-width: 1300px; margin-bottom: 30px; }
         
-        .paper-panel { background-color: #f4f1ea; color: #2c3e50; border-radius: 3px; box-shadow: 2px 4px 15px rgba(0,0,0,0.4); padding: 30px; display: flex; flex-direction: column; position: relative; border: 1px solid #dcd3c6; }
+        .paper-panel { background-color: #f4f1ea; color: #2c3e50; border-radius: 3px; box-shadow: 2px 4px 15px rgba(0,0,0,0.4); padding: 30px; display: flex; flex-direction: column; position: relative; border: 1px solid #dcd3c6; transition: 0.3s; }
         .paper-panel h2 { color: #2c3e50; font-size: 1.4rem; margin-top: 0; margin-bottom: 20px; border-bottom: 3px double #2c3e50; padding-bottom: 10px; font-weight: bold; letter-spacing: 1px; }
         
         .paper-group { margin-bottom: 15px; }
@@ -49,14 +48,15 @@
         .paper-group input:focus, .paper-group select:focus, .paper-group textarea:focus { border-bottom: 2px solid #e74c3c; background: rgba(255,255,255,0.5); }
         
         .paper-btn { width: 100%; padding: 12px; background-color: #2c3e50; color: #f4f1ea; border: none; border-radius: 3px; cursor: pointer; margin-top: 10px; font-weight:bold; font-family: inherit; font-size: 1rem; transition: 0.2s; letter-spacing: 1px;}
-        .paper-btn:hover { background-color: #34495e; }
+        .paper-btn:hover:not(:disabled) { background-color: #34495e; }
+        .paper-btn:disabled { background-color: #7f8c8d; cursor: not-allowed; opacity: 0.7;}
         .confirm-btn { background-color: #27ae60; }
         .confirm-btn:hover { background-color: #2ecc71; }
 
         .start-btn { width: 100%; max-width: 1300px; padding: 20px; background-color: #4db8ff; color: #1e1e2f; border: none; border-radius: 5px; font-size: 1.3rem; font-weight: bold; cursor: pointer; transition: 0.3s; letter-spacing: 3px; }
         .start-btn:hover:not(:disabled) { background-color: #2980b9; color: #fff; box-shadow: 0 0 15px rgba(77,184,255,0.5); }
         .start-btn:disabled { background-color: #3d3d5c; color: #8c8c8c; cursor: not-allowed; }
-        .locked-panel { opacity: 0.5; pointer-events: none; position: relative; filter: grayscale(50%); }
+        .locked-panel { opacity: 0.4; pointer-events: none; position: relative; filter: grayscale(80%); }
         
         /* ================= 3. 遊戲介面 ================= */
         #game-screen { display: none; width: 100%; height: 100vh; flex-direction: column; background-color: #1e1e2f; }
@@ -105,7 +105,6 @@
         .hist-box div { border-bottom: 1px dashed #3d3d5c; padding-bottom: 4px; }
         .hist-box span.lbl { color: #a3a3c2; font-weight: bold; margin-right: 5px; }
 
-        /* 統一角色卡版型設計 */
         .character-card-content { color: #dcdcdc; font-size: 0.95rem; line-height: 1.7; flex-grow: 1; overflow-y: auto; padding-right: 10px;}
         .character-card-content p { margin: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px;}
         .character-card-content strong { color: #4db8ff; }
@@ -180,6 +179,9 @@
                 ⚙️ 後台資料維修區 - 艾柏特核心設定
             </div>
             <div class="modal-body">
+                <div class="memory-info" style="color:#dcdcdc; margin-top:0;">
+                    ⚠️ <strong style="color:#e74c3c;">權限說明：</strong> 此為純前端網頁架構。您在此處設定的 Prompt 將儲存於<strong>當前裝置的瀏覽器</strong>中。若要同步給所有使用者，需將網頁與後端資料庫（如 Firebase）串接。
+                </div>
                 <div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                         <label class="admin-label" style="margin:0;">請於下方編輯艾柏特的基本資料、性格與設定：</label>
@@ -211,7 +213,7 @@
         <div class="skip-hint">點擊畫面任意處進入大廳</div>
     </div>
 
-    <!-- ================= 2. 起始頁面 (大廳) ================= -->
+    <!-- ================= 2. 起始頁面 (文書風格大廳) ================= -->
     <div id="start-screen">
         <!-- SVG 發光齒輪浮水印 -->
         <div class="admin-watermark" onclick="openAdminAuth()" title="進入系統維護區">
@@ -224,18 +226,9 @@
         <div class="lobby-title">第四區入職報到系統</div>
         
         <div class="lobby-layout">
-            <!-- 區塊 1：存檔資料 -->
+            <!-- 區塊 1：API 連線 (置左優先) -->
             <div class="paper-panel">
-                <h2>📁 檔案調閱申請單</h2>
-                <p style="font-size: 1rem; line-height: 1.6; margin-bottom: 20px;">
-                    說明：若您擁有過去的勤務紀錄，請點擊下方按鈕進行調閱，系統將自動恢復您的身分資料與進度。
-                </p>
-                <button type="button" class="paper-btn" onclick="openModal('load')">調閱本地存檔</button>
-            </div>
-
-            <!-- 區塊 2：API 連線 -->
-            <div class="paper-panel">
-                <h2>🔌 系統連線設定</h2>
+                <h2>🔌 1. 系統連線設定</h2>
                 <div class="paper-group">
                     <label>處理器 (AI 引擎)</label>
                     <select id="ai-provider" onchange="resetApiLock()">
@@ -265,13 +258,22 @@
                 </div>
             </div>
 
-            <!-- 區塊 3：角色卡建檔 -->
+            <!-- 區塊 2：存檔調閱 (需解鎖) -->
+            <div class="paper-panel locked-panel" id="load-panel">
+                <h2>📁 2. 檔案調閱申請單</h2>
+                <p style="font-size: 1rem; line-height: 1.6; margin-bottom: 20px;">
+                    說明：若您擁有過去的勤務紀錄，請點擊下方按鈕進行調閱，系統將自動恢復您的身分資料與進度。
+                </p>
+                <button type="button" id="load-btn" class="paper-btn" disabled onclick="openModal('load')">調閱本地存檔</button>
+            </div>
+
+            <!-- 區塊 3：角色卡建檔 (需解鎖) -->
             <div class="paper-panel locked-panel" id="char-panel">
-                <h2>📝 新進人員建檔表</h2>
+                <h2>📝 3. 新進人員建檔表</h2>
                 <div class="paper-group" style="background: rgba(0,0,0,0.05); padding: 15px; border-radius: 3px; border: 1px dashed #7f8c8d;">
                     <label>快速匯入 (AI 辨識)</label>
                     <textarea id="char-parse-text" rows="2" placeholder="將設定文字貼於此處..."></textarea>
-                    <button type="button" class="paper-btn" style="background: #8e44ad;" onclick="parseCharacterText()">執行文字辨識</button>
+                    <button type="button" id="parse-btn" class="paper-btn" disabled style="background: #8e44ad;" onclick="parseCharacterText()">執行文字辨識</button>
                     <div id="parse-status" style="font-size:0.85rem; color:#d35400; margin-top:8px; font-weight:bold;"></div>
                 </div>
                 
@@ -295,7 +297,7 @@
                 </div>
             </div>
         </div>
-        <button type="button" id="main-start-btn" class="start-btn" disabled onclick="startGame()">表單繳交完畢，進入第四區</button>
+        <button type="button" id="main-start-btn" class="start-btn" disabled onclick="startGame()">表單繳交完畢，開局進入第四區</button>
     </div>
 
     <!-- ================= 3. 遊戲介面 ================= -->
@@ -528,7 +530,10 @@
             document.getElementById('local-fields').style.display = selectedAI === 'local' ? 'block' : 'none';
             
             isApiConfirmed = false;
+            document.getElementById('load-panel').classList.add('locked-panel');
             document.getElementById('char-panel').classList.add('locked-panel');
+            document.getElementById('load-btn').disabled = true;
+            document.getElementById('parse-btn').disabled = true;
             document.getElementById('main-start-btn').disabled = true;
             
             const statusText = document.getElementById('api-status-text');
@@ -550,11 +555,14 @@
             }
 
             isApiConfirmed = true;
+            document.getElementById('load-panel').classList.remove('locked-panel');
             document.getElementById('char-panel').classList.remove('locked-panel');
+            document.getElementById('load-btn').disabled = false;
+            document.getElementById('parse-btn').disabled = false;
             document.getElementById('main-start-btn').disabled = false;
             
             const statusText = document.getElementById('api-status-text');
-            statusText.innerText = '✅ 連線成功，已解鎖人員建檔表';
+            statusText.innerText = '✅ 連線成功，已解鎖各項表單';
             statusText.style.color = '#27ae60';
         }
 
@@ -584,8 +592,10 @@
             fields.forEach(f => {
                 const val = document.getElementById(`start-${f}`).value.trim();
                 if(!val && f !== 'pheromone') isValid = false; 
+                // 填入遊戲區的唯讀欄位
                 document.getElementById(`game-${f}`).innerText = val;
             });
+            // 處理遊戲介面中 Beta 信息素的隱藏
             const gameAbo = document.getElementById('game-abo').innerText;
             if(gameAbo === 'Beta') {
                 document.getElementById('game-pheromone-group').style.display = 'none';
@@ -643,7 +653,7 @@
         }
 
         // ---------------------------------------------------------
-        // 4. AI 互動與邏輯
+        // 4. AI 互動與邏輯 (引入維修區自訂 Prompt)
         // ---------------------------------------------------------
         
         function buildSystemPrompt() {
@@ -920,7 +930,7 @@ ${charData}${memorySection}${dynamicSection}
             event.stopPropagation();
             if(confirm(`確定要刪除存檔 [${name}] 嗎？此動作無法復原。`)) {
                 localStorage.removeItem('sentrySave_' + name);
-                openModal(document.getElementById('sl-title').innerText.includes('讀取') ? 'load' : 'save'); // 刷新列表
+                openModal(document.getElementById('sl-title').innerText.includes('讀取') ? 'load' : 'save');
             }
         }
 
