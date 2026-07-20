@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>哨嚮 & 獸人世界</title>
+    <title>哨嚮 & 獸人</title>
     <style>
         /* ================= 全域與字體優化 ================= */
         body { 
@@ -185,8 +185,9 @@
                 <div>
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
                         <label class="admin-label" style="margin:0;">請於下方編輯艾柏特的基本資料、性格與設定：</label>
-                        <input type="file" id="admin-file-upload" accept=".txt" style="display:none;" onchange="loadAdminFile(event)">
-                        <button class="sys-btn" style="background:#8e44ad; border-color:#9b59b6;" onclick="document.getElementById('admin-file-upload').click()">📂 匯入 TXT 檔案</button>
+                        <!-- 支援多檔匯入 -->
+                        <input type="file" id="admin-file-upload" accept=".txt" multiple style="display:none;" onchange="loadAdminFile(event)">
+                        <button class="sys-btn" style="background:#8e44ad; border-color:#9b59b6;" onclick="document.getElementById('admin-file-upload').click()">📂 匯入多個 TXT 檔案</button>
                     </div>
                     <textarea id="admin-albert-prompt" class="admin-textarea"></textarea>
                 </div>
@@ -305,14 +306,14 @@
         
         <div class="game-nav">
             <div class="tabs-container">
-                <button class="tab-btn active" onclick="switchTab('tab-chat')">聊天行動區</button>
-                <button class="tab-btn" onclick="switchTab('tab-char')">角色與狀態</button>
-                <button class="tab-btn" onclick="switchTab('tab-memory')">記憶後臺</button>
+                <button class="tab-btn active" onclick="switchTab('tab-chat')">💬 聊天行動區</button>
+                <button class="tab-btn" onclick="switchTab('tab-char')">👤 角色與狀態</button>
+                <button class="tab-btn" onclick="switchTab('tab-memory')">🧠 記憶後臺</button>
             </div>
             <div class="sys-actions">
-                <button class="sys-btn" onclick="openModal('save')">存檔管理</button>
-                <button class="sys-btn" onclick="openModal('load')">讀取紀錄</button>
-                <button class="sys-btn" style="background:#e74c3c; border-color:#c0392b;" onclick="returnToSetup()">離開系統</button>
+                <button class="sys-btn" onclick="openModal('save')">💾 存檔管理</button>
+                <button class="sys-btn" onclick="openModal('load')">📂 讀取紀錄</button>
+                <button class="sys-btn" style="background:#e74c3c; border-color:#c0392b;" onclick="returnToSetup()">🔙 離開系統</button>
             </div>
         </div>
 
@@ -362,7 +363,7 @@
 
                 <!-- 艾柏特角色卡 -->
                 <div class="char-panel" style="border-top: 4px solid #9b59b6;">
-                    <h3 style="color: #9b59b6;">🦎 艾柏特·科摩多</h3>
+                    <h3 style="color: #9b59b6;">🦎 艾柏特·科摩多 (指導前輩)</h3>
                     <div class="character-card-content">
                         <p><strong style="color:#9b59b6;">年齡 / 職業：</strong>27 歲 / 第四區 S 級嚮導</p>
                         <p><strong style="color:#9b59b6;">種族 / 性別：</strong>科摩多巨蜥獸人 / Alpha</p>
@@ -476,14 +477,23 @@
             closeModals();
         }
 
-        function loadAdminFile(e) {
-            const file = e.target.files[0];
-            if(!file) return;
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                document.getElementById('admin-albert-prompt').value += '\n\n' + event.target.result;
-            };
-            reader.readAsText(file);
+        async function loadAdminFile(e) {
+            const files = e.target.files;
+            if(!files || files.length === 0) return;
+            
+            let promptArea = document.getElementById('admin-albert-prompt');
+            
+            for(let i = 0; i < files.length; i++) {
+                let file = files[i];
+                let text = await new Promise((resolve) => {
+                    let reader = new FileReader();
+                    reader.onload = (event) => resolve(event.target.result);
+                    reader.readAsText(file);
+                });
+                promptArea.value += '\n\n' + text;
+            }
+            
+            e.target.value = '';
         }
 
         document.getElementById('admin-pwd-input').addEventListener('keydown', (e) => {
@@ -907,7 +917,7 @@ ${charData}${memorySection}${dynamicSection}
                     list.appendChild(div);
                 });
             } else if (mode === 'load') {
-                title.innerText = '讀取存檔';
+                title.innerText = '📂 讀取存檔';
                 if(saves.length === 0) {
                     list.innerHTML = '<div style="color:#8c8c8c; text-align:center; padding:20px 0;">目前沒有任何存檔。</div>';
                 } else {
