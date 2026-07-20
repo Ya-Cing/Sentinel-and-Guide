@@ -11,105 +11,132 @@
         /* ================= 1. 開場動畫 ================= */
         #intro-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background-color: #0b0b13; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.5s ease-in-out; cursor: pointer; }
         .counter-desk { position: relative; width: 400px; height: 250px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
-        .signboard { background: #1a1a24; color: #4db8ff; border: 2px solid #4db8ff; padding: 15px 30px; font-size: 2rem; font-weight: bold; letter-spacing: 5px; text-shadow: 0 0 10px rgba(77,184,255,0.5); border-radius: 5px; margin-bottom: 20px; box-shadow: 0 0 20px rgba(77,184,255,0.2); animation: neonPulse 2s infinite alternate; }
+        .signboard { background: #1a1a24; color: #4db8ff; border: 2px solid #4db8ff; padding: 15px 30px; font-size: 2rem; font-weight: bold; letter-spacing: 5px; text-shadow: 0 0 10px rgba(77,184,255,0.5); border-radius: 5px; margin-bottom: 20px; box-shadow: 0 0 20px rgba(77,184,255,0.2); }
         .desk-top { width: 100%; height: 40px; background: #3d3d5c; border-radius: 5px 5px 0 0; border-top: 3px solid #2980b9; }
         .desk-front { width: 90%; height: 100px; background: #2a2a40; border-left: 2px solid #1e1e2f; border-right: 2px solid #1e1e2f; display: flex; justify-content: center; align-items: center; }
-        .typing-text { color: #a3a3c2; font-family: monospace; font-size: 1.2rem; letter-spacing: 2px; white-space: nowrap; overflow: hidden; border-right: 3px solid #4db8ff; animation: typing 2.5s steps(30, end), blink 0.5s step-end infinite alternate; width: 0; }
+        .typing-text { color: #a3a3c2; font-family: monospace; font-size: 1.2rem; letter-spacing: 2px; white-space: nowrap; overflow: hidden; animation: typing 2s steps(30, end) forwards; width: 0; }
         .skip-hint { position: absolute; bottom: 30px; right: 30px; color: #8c8c8c; font-size: 0.9rem; letter-spacing: 2px; animation: pulse 2s infinite; }
-        @keyframes neonPulse { from { box-shadow: 0 0 10px rgba(77,184,255,0.2); } to { box-shadow: 0 0 25px rgba(77,184,255,0.6); } }
-        @keyframes typing { from { width: 0; } to { width: 100%; } }
-        @keyframes blink { 50% { border-color: transparent; } }
+        @keyframes typing { from { width: 0; } to { width: 100%; border-right: none; } }
         @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 
-        /* ================= 2. 起始頁面樣式 (大廳) ================= */
+        /* ================= 2. 起始頁面樣式 (公文風格大廳) ================= */
         #start-screen { display: none; flex-direction: column; align-items: center; justify-content: flex-start; height: 100vh; background-color: #1a1a24; overflow-y: auto; padding: 40px 20px; box-sizing: border-box; }
-        .lobby-title { color: #4db8ff; font-size: 2.2rem; letter-spacing: 5px; margin-bottom: 30px; text-shadow: 0 0 10px rgba(77,184,255,0.3); border-bottom: 2px solid #3d3d5c; padding-bottom: 15px; width: 100%; max-width: 1200px; text-align: center;}
+        .lobby-title { color: #4db8ff; font-size: 2.2rem; letter-spacing: 5px; margin-bottom: 30px; text-shadow: 0 0 10px rgba(77,184,255,0.3); border-bottom: 2px solid #3d3d5c; padding-bottom: 15px; width: 100%; max-width: 1300px; text-align: center;}
         
-        .lobby-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; width: 100%; max-width: 1200px; margin-bottom: 30px; }
-        .lobby-panel { background-color: #2a2a40; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); padding: 25px; border-top: 4px solid #3d3d5c; display: flex; flex-direction: column; }
-        .lobby-panel h2 { color: #4db8ff; font-size: 1.3rem; margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #3d3d5c; padding-bottom: 10px; display: flex; align-items: center; }
+        .lobby-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; width: 100%; max-width: 1300px; margin-bottom: 30px; }
         
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; color: #a3a3c2; font-weight: bold; font-size: 0.9rem; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #3d3d5c; border-radius: 5px; background-color: #1e1e2f; color: #fff; box-sizing: border-box; font-family: inherit; transition: border 0.3s; }
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: #4db8ff; outline: none; }
+        /* 公文紙風格 */
+        .paper-panel { background-color: #f4f1ea; color: #2c3e50; border-radius: 3px; box-shadow: 2px 4px 15px rgba(0,0,0,0.4); padding: 30px; display: flex; flex-direction: column; font-family: "Courier New", Courier, monospace; position: relative; border: 1px solid #dcd3c6; }
+        .paper-panel h2 { color: #2c3e50; font-size: 1.4rem; margin-top: 0; margin-bottom: 20px; border-bottom: 3px double #2c3e50; padding-bottom: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
         
-        .action-btn { width: 100%; padding: 12px; background-color: #3d3d5c; color: #fff; border: 1px solid #4db8ff; border-radius: 5px; cursor: pointer; margin-top: 10px; font-weight:bold; transition: 0.3s; }
-        .action-btn:hover { background-color: #4db8ff; color: #12121a; }
-        .confirm-btn { background-color: #27ae60; border-color: #2ecc71; }
-        .confirm-btn:hover { background-color: #2ecc71; color: #fff; }
+        .paper-group { margin-bottom: 15px; }
+        .paper-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 0.95rem; }
+        .paper-group input, .paper-group select, .paper-group textarea { width: 100%; padding: 8px 5px; background: transparent; border: none; border-bottom: 2px dashed #7f8c8d; color: #2c3e50; font-family: inherit; font-size: 1rem; outline: none; transition: 0.3s; box-sizing: border-box; }
+        .paper-group input:focus, .paper-group select:focus, .paper-group textarea:focus { border-bottom: 2px solid #e74c3c; background: rgba(255,255,255,0.5); }
+        
+        .paper-btn { width: 100%; padding: 12px; background-color: #2c3e50; color: #f4f1ea; border: none; border-radius: 3px; cursor: pointer; margin-top: 10px; font-weight:bold; font-family: inherit; font-size: 1rem; transition: 0.2s; }
+        .paper-btn:hover { background-color: #34495e; }
+        .confirm-btn { background-color: #27ae60; }
+        .confirm-btn:hover { background-color: #2ecc71; }
 
-        .start-btn { width: 100%; max-width: 1200px; padding: 18px; background-color: #4db8ff; color: #1e1e2f; border: none; border-radius: 8px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: background 0.3s; letter-spacing: 2px; }
-        .start-btn:hover:not(:disabled) { background-color: #2980b9; color: #fff; }
+        .start-btn { width: 100%; max-width: 1300px; padding: 20px; background-color: #4db8ff; color: #1e1e2f; border: none; border-radius: 5px; font-size: 1.3rem; font-weight: bold; cursor: pointer; transition: 0.3s; letter-spacing: 3px; }
+        .start-btn:hover:not(:disabled) { background-color: #2980b9; color: #fff; box-shadow: 0 0 15px rgba(77,184,255,0.5); }
         .start-btn:disabled { background-color: #3d3d5c; color: #8c8c8c; cursor: not-allowed; }
 
-        .locked-panel { opacity: 0.4; pointer-events: none; position: relative; transition: opacity 0.3s; }
+        .locked-panel { opacity: 0.5; pointer-events: none; position: relative; filter: grayscale(50%); }
         
         /* ================= 3. 遊戲介面 (分頁式) ================= */
         #game-screen { display: none; width: 100%; height: 100vh; flex-direction: column; background-color: #1e1e2f; }
         
-        /* 頂部導覽列與分頁按鈕 */
         .game-nav { height: 60px; background-color: #1a1a24; display: flex; align-items: center; padding: 0 20px; border-bottom: 2px solid #3d3d5c; justify-content: space-between; }
         .tabs-container { display: flex; gap: 10px; }
         .tab-btn { background-color: #2a2a40; color: #a3a3c2; border: 1px solid #3d3d5c; padding: 10px 20px; border-radius: 5px 5px 0 0; cursor: pointer; font-size: 1rem; font-weight: bold; transition: 0.2s; border-bottom: none; }
         .tab-btn:hover { background-color: #3d3d5c; color: #fff; }
         .tab-btn.active { background-color: #1e1e2f; color: #4db8ff; border-top: 3px solid #4db8ff; }
         
-        .sys-actions { display: flex; gap: 10px; }
-        .sys-btn { background-color: #3d3d5c; color: #fff; border: 1px solid #4db8ff; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; transition: 0.2s; }
+        .sys-actions { display: flex; gap: 10px; align-items: center; }
+        .sys-btn { background-color: #3d3d5c; color: #fff; border: 1px solid #4db8ff; padding: 6px 15px; border-radius: 4px; cursor: pointer; font-size: 0.9rem; transition: 0.2s; font-weight: bold; }
         .sys-btn:hover { background-color: #4db8ff; color: #12121a; }
         
-        /* 分頁內容區 */
         .tab-content { display: none; flex-grow: 1; overflow-y: auto; }
-        .tab-content.active { display: flex; flex-direction: column; }
+        .tab-content.active { display: flex; }
         
-        /* [標籤 1] 聊天行動區 */
+        /* [標籤 1] 聊天行動區 (防重疊排版) */
+        #tab-chat { flex-direction: row; }
+        
+        /* 左側固定狀態區 */
+        .left-mini-status { width: 240px; background-color: #1a1a24; border-right: 2px solid #3d3d5c; padding: 20px; display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto; }
+        .left-mini-status h4 { margin: 0 0 15px 0; color: #4db8ff; border-bottom: 2px solid #3d3d5c; padding-bottom: 10px; font-size: 1.1rem; }
+        .status-row { margin: 10px 0; font-size: 0.9rem; display: flex; flex-direction: column; background: #222230; padding: 10px; border-radius: 5px; border: 1px solid #2a2a40; }
+        .status-row span.lbl { color: #a3a3c2; font-weight: bold; margin-bottom: 5px; font-size: 0.8rem; }
+        .status-row span.val { color: #ecf0f1; }
+        .val-highlight { color: #f39c12 !important; font-weight: bold; }
+        .val-interest { color: #e74c3c !important; font-weight: bold; }
+
+        /* 右側聊天主視窗 */
+        .chat-main-area { flex-grow: 1; display: flex; flex-direction: column; position: relative; min-width: 0; }
         #chat-box { flex-grow: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; scroll-behavior: smooth; }
         .message { max-width: 85%; padding: 15px; border-radius: 8px; line-height: 1.6; }
-        .ai-message { background-color: #2a2a40; align-self: flex-start; border-left: 4px solid #4db8ff; }
-        .player-message { background-color: #4db8ff; color: #1e1e2f; align-self: flex-end; border-right: 4px solid #2980b9; }
-        #input-area { display: flex; padding: 15px; background-color: #1a1a24; border-top: 2px solid #3d3d5c; align-items: center; }
+        .ai-message { background-color: #2a2a40; align-self: flex-start; border-left: 4px solid #4db8ff; box-shadow: 2px 2px 8px rgba(0,0,0,0.2); }
+        .player-message { background-color: #4db8ff; color: #1e1e2f; align-self: flex-end; border-right: 4px solid #2980b9; box-shadow: 2px 2px 8px rgba(0,0,0,0.2); }
         
-        /* Textarea 樣式 */
-        #player-input { flex-grow: 1; padding: 12px; font-size: 1rem; border: 1px solid #3d3d5c; border-radius: 5px; background-color: #12121a; color: #fff; outline: none; resize: none; font-family: inherit; line-height: 1.5; }
+        #input-area { display: flex; padding: 20px; background-color: #1a1a24; border-top: 2px solid #3d3d5c; align-items: stretch; gap: 15px; }
+        #player-input { flex-grow: 1; padding: 15px; font-size: 1rem; border: 1px solid #3d3d5c; border-radius: 5px; background-color: #12121a; color: #fff; outline: none; resize: none; font-family: inherit; line-height: 1.5; }
         #player-input:focus { border-color: #4db8ff; }
-        
-        #send-btn { padding: 0 25px; margin-left: 15px; height: 100%; min-height: 50px; background-color: #4db8ff; color: #1e1e2f; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1.1rem; }
-        
+        #send-btn { padding: 0 30px; background-color: #4db8ff; color: #1e1e2f; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1.1rem; transition: 0.2s; }
+        #send-btn:hover { background-color: #2980b9; color: #fff; }
+
         /* [標籤 2] 角色資料與狀態區 */
-        .char-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; padding: 20px; }
-        .char-panel { background: #2a2a40; border-radius: 8px; padding: 20px; border: 1px solid #3d3d5c; display: flex; flex-direction: column; max-height: 80vh;}
-        .char-panel h3 { color: #4db8ff; margin-top: 0; border-bottom: 1px solid #3d3d5c; padding-bottom: 10px; }
+        .char-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; padding: 20px; width: 100%; box-sizing: border-box; }
+        .char-panel { background: #2a2a40; border-radius: 8px; padding: 20px; border: 1px solid #3d3d5c; display: flex; flex-direction: column; max-height: calc(100vh - 100px); }
+        .char-panel h3 { color: #4db8ff; margin-top: 0; border-bottom: 2px solid #3d3d5c; padding-bottom: 10px; font-size: 1.2rem; }
         
-        .status-history-container { flex-grow: 1; overflow-y: auto; padding-right: 10px; display: flex; flex-direction: column; gap: 10px; }
-        .status-box { padding: 15px; background-color: #222230; border-radius: 8px; border: 1px solid #4db8ff; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .status-box div { font-size: 0.95rem; color: #ecf0f1; border-bottom: 1px dashed #3d3d5c; padding-bottom: 4px; }
-        .status-box span { color: #a3a3c2; font-weight: bold; margin-right: 5px; }
+        .status-history-container { flex-grow: 1; overflow-y: auto; padding-right: 10px; display: flex; flex-direction: column; gap: 15px; }
+        .hist-box { padding: 15px; background-color: #222230; border-radius: 5px; border-left: 3px solid #4db8ff; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.9rem; }
+        .hist-box div { border-bottom: 1px dashed #3d3d5c; padding-bottom: 4px; }
+        .hist-box span.lbl { color: #a3a3c2; font-weight: bold; margin-right: 5px; }
+
+        /* 唯讀角色卡樣式 */
+        .readonly-field { background: #12121a; border: 1px solid #3d3d5c; padding: 10px; border-radius: 5px; color: #dcdcdc; font-size: 0.95rem; min-height: 20px; margin-bottom: 15px; }
+        .readonly-label { color: #4db8ff; font-weight: bold; font-size: 0.85rem; margin-bottom: 5px; display: block; }
         
-        /* NPC 介紹區卡片 */
         .npc-card { background: #1e1e2f; padding: 15px; border-radius: 5px; margin-bottom: 15px; border-left: 4px solid #9b59b6; }
         .npc-card h4 { margin: 0 0 10px 0; color: #9b59b6; }
-        .npc-card p { margin: 0; font-size: 0.9rem; color: #dcdcdc; line-height: 1.5; }
+        .npc-card p { margin: 0; font-size: 0.9rem; color: #dcdcdc; line-height: 1.6; }
 
         /* [標籤 3] 記憶編輯區 */
         #tab-memory { padding: 20px; flex-direction: column; }
-        .memory-info { padding: 15px; font-size: 0.9rem; color: #a3a3c2; background: #222230; border-radius: 5px; border: 1px solid #3d3d5c; margin-bottom: 15px; }
+        .memory-info { padding: 15px; font-size: 0.95rem; color: #a3a3c2; background: #222230; border-radius: 5px; border: 1px solid #3d3d5c; margin-bottom: 15px; line-height: 1.5; }
         #memory-text { flex-grow: 1; background-color: #12121a; border: 1px solid #3d3d5c; border-radius: 5px; color: #dcdcdc; padding: 20px; font-family: inherit; font-size: 1rem; line-height: 1.6; resize: none; outline: none; margin-bottom: 15px; }
         #memory-text:focus { border-color: #4db8ff; }
 
-        #loading-indicator { display: none; position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%); background: rgba(42, 42, 64, 0.9); padding: 10px 20px; border-radius: 20px; border: 1px solid #4db8ff; font-size: 0.9rem; color: #4db8ff; align-items: center; gap: 10px; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-        .spinner { width: 16px; height: 16px; border: 3px solid #3d3d5c; border-top-color: #4db8ff; border-radius: 50%; animation: spin 1s linear infinite; }
+        #loading-indicator { display: none; position: absolute; bottom: 120px; left: 50%; transform: translateX(-50%); background: rgba(42, 42, 64, 0.95); padding: 15px 25px; border-radius: 30px; border: 1px solid #4db8ff; font-size: 1rem; color: #4db8ff; align-items: center; gap: 15px; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.6); font-weight: bold; }
+        .spinner { width: 20px; height: 20px; border: 3px solid #3d3d5c; border-top-color: #4db8ff; border-radius: 50%; animation: spin 1s linear infinite; }
         
         .system-text { color: #8c8c8c; font-size: 0.85rem; text-align: center; margin: 10px 0; font-style: italic; }
-        
-        /* 浮動的極簡左側狀態欄 (放置於聊天區旁) */
-        .left-mini-status { position: absolute; left: 20px; top: 20px; width: 220px; background: rgba(42, 42, 64, 0.85); backdrop-filter: blur(5px); border: 1px solid #3d3d5c; border-radius: 8px; padding: 15px; pointer-events: none; }
-        .left-mini-status h4 { margin: 0 0 10px 0; color: #4db8ff; border-bottom: 1px solid #3d3d5c; padding-bottom: 5px; }
-        .left-mini-status p { margin: 5px 0; font-size: 0.85rem; display: flex; justify-content: space-between; }
-        .left-mini-status p span.lbl { color: #a3a3c2; }
+
+        /* 存檔管理 Modal */
+        #sl-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center; }
+        .sl-content { background: #2a2a40; width: 400px; padding: 25px; border-radius: 8px; border: 2px solid #4db8ff; display: flex; flex-direction: column; gap: 15px; }
+        .sl-content h3 { margin: 0; color: #4db8ff; border-bottom: 1px solid #3d3d5c; padding-bottom: 10px; }
+        #sl-list { max-height: 250px; overflow-y: auto; display: flex; flex-direction: column; gap: 5px; }
+        .sl-item { background: #1e1e2f; padding: 10px; border: 1px solid #3d3d5c; border-radius: 4px; cursor: pointer; color: #dcdcdc; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; }
+        .sl-item:hover { border-color: #4db8ff; background: #222230; }
+        .sl-item-name { font-weight: bold; }
+        .sl-input { padding: 10px; background: #12121a; border: 1px solid #4db8ff; color: #fff; border-radius: 4px; outline: none; width: 100%; box-sizing: border-box;}
     </style>
 </head>
 <body>
+
+    <!-- ================= 存讀檔 Modal ================= -->
+    <div id="sl-modal">
+        <div class="sl-content">
+            <h3 id="sl-title">檔案管理</h3>
+            <div id="sl-list"></div>
+            <div id="sl-action-area"></div>
+            <button class="sys-btn" style="margin-top:10px; background:#e74c3c; border-color:#c0392b;" onclick="closeModal()">取消 / 關閉</button>
+        </div>
+    </div>
 
     <!-- ================= 1. 開場動畫 ================= -->
     <div id="intro-screen">
@@ -120,90 +147,92 @@
                 <div class="typing-text">系統連線中... 正在為您分發前輩...</div>
             </div>
         </div>
-        <div class="skip-hint">點擊畫面任意處跳過動畫</div>
+        <div class="skip-hint">點擊畫面任意處進入大廳</div>
     </div>
 
-    <!-- ================= 2. 起始頁面 (大廳) ================= -->
+    <!-- ================= 2. 起始頁面 (文書風格大廳) ================= -->
     <div id="start-screen">
-        <div class="lobby-title">第四區 報到大廳</div>
+        <div class="lobby-title">第四區入職報到系統</div>
         
         <div class="lobby-layout">
             <!-- 區塊 1：存檔資料 -->
-            <div class="lobby-panel" style="border-top-color: #e67e22;">
-                <h2 style="color: #e67e22;">📂 【資料調閱】存檔</h2>
-                <p style="color:#a3a3c2; font-size:0.9rem; flex-grow:1;">若您過去已有報到紀錄，可直接調閱本地端存檔，系統將自動填寫身分證並接續上次的進度。</p>
-                <button type="button" class="action-btn" style="background:#e67e22; border-color:#e67e22; color:#12121a;" onclick="loadGame(true)">讀取本地存檔</button>
+            <div class="paper-panel">
+                <h2>📁 檔案調閱申請單</h2>
+                <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
+                    說明：若您擁有過去的勤務紀錄，請點擊下方按鈕進行調閱，系統將自動恢復您的身分資料與進度。
+                </p>
+                <button type="button" class="paper-btn" onclick="openModal('load')">調閱本地存檔</button>
             </div>
 
             <!-- 區塊 2：API 連線 -->
-            <div class="lobby-panel" style="border-top-color: #4db8ff;">
-                <h2 style="color: #4db8ff;">🔌 【系統連線】引擎設定</h2>
-                <div class="form-group">
-                    <label>選擇 AI 引擎</label>
+            <div class="paper-panel">
+                <h2>🔌 系統連線設定</h2>
+                <div class="paper-group">
+                    <label>處理器 (AI 引擎)</label>
                     <select id="ai-provider" onchange="resetApiLock()">
                         <option value="gemini">Google Gemini API (雲端)</option>
-                        <option value="local">Local AI / Ollama / LM Studio (地端)</option>
+                        <option value="local">Local AI / Ollama (地端)</option>
                     </select>
                 </div>
                 <div id="gemini-fields">
-                    <div class="form-group">
-                        <label>Gemini API Key</label>
-                        <input type="password" id="api-key" placeholder="請輸入您的 API 金鑰" oninput="resetApiLock()">
+                    <div class="paper-group">
+                        <label>授權金鑰 (API Key)</label>
+                        <input type="password" id="api-key" placeholder="請輸入授權碼..." oninput="resetApiLock()">
                     </div>
                 </div>
                 <div id="local-fields" style="display: none;">
-                    <div class="form-group">
-                        <label>地端 API 網址</label>
+                    <div class="paper-group">
+                        <label>伺服器位址</label>
                         <input type="text" id="local-url" value="http://localhost:11434/v1/chat/completions" oninput="resetApiLock()">
                     </div>
-                    <div class="form-group">
-                        <label>模型名稱 (選填)</label>
+                    <div class="paper-group">
+                        <label>模型代號 (選填)</label>
                         <input type="text" id="local-model" placeholder="例如：llama3">
                     </div>
                 </div>
-                <div style="margin-top: auto;">
-                    <button type="button" id="api-confirm-btn" class="action-btn confirm-btn" onclick="confirmAPI()">確認連線</button>
-                    <div id="api-status-text" style="font-size:0.85rem; color:#e74c3c; margin-top:10px; text-align:center;">請先確認連線以解鎖建檔。</div>
+                <div style="margin-top: auto; padding-top:20px;">
+                    <button type="button" class="paper-btn confirm-btn" onclick="confirmAPI()">簽署並確認連線</button>
+                    <div id="api-status-text" style="font-size:0.85rem; color:#c0392b; margin-top:10px; text-align:center; font-weight:bold;">【請先確認連線，以解鎖右側表單】</div>
                 </div>
             </div>
 
             <!-- 區塊 3：角色卡建檔 -->
-            <div class="lobby-panel locked-panel" id="char-panel" style="border-top-color: #9b59b6;">
-                <h2 style="color: #9b59b6;">📝 【人員建檔】角色卡</h2>
+            <div class="paper-panel locked-panel" id="char-panel">
+                <h2>📝 新進人員建檔表</h2>
                 <!-- 文字辨識 -->
-                <div class="form-group" style="background: #1e1e2f; padding: 10px; border-radius: 5px; border: 1px solid #3d3d5c;">
-                    <label style="color: #9b59b6;">AI 快速匯入</label>
-                    <textarea id="char-parse-text" rows="2" placeholder="貼上設定文字後，點擊自動填寫"></textarea>
-                    <button type="button" id="parse-btn" class="action-btn" style="background: #8e44ad; border-color: #9b59b6;" onclick="parseCharacterText()">自動辨識並填寫</button>
-                    <div id="parse-status" style="font-size:0.8rem; color:#f39c12; margin-top:5px;"></div>
+                <div class="paper-group" style="background: rgba(0,0,0,0.05); padding: 10px; border-radius: 3px; border: 1px dashed #7f8c8d;">
+                    <label>快速匯入 (AI 辨識)</label>
+                    <textarea id="char-parse-text" rows="2" placeholder="將設定文字貼於此處..."></textarea>
+                    <button type="button" class="paper-btn" style="background: #8e44ad;" onclick="parseCharacterText()">執行文字辨識</button>
+                    <div id="parse-status" style="font-size:0.8rem; color:#d35400; margin-top:5px; font-weight:bold;"></div>
                 </div>
-                <div style="height: 250px; overflow-y: auto; padding-right: 5px;">
-                    <div class="form-group"><label>姓名</label><input type="text" id="start-name"></div>
-                    <div class="form-group"><label>年齡</label><input type="text" id="start-age"></div>
-                    <div class="form-group"><label>外貌</label><input type="text" id="start-look"></div>
-                    <div class="form-group"><label>種族 / 第一性別</label><input type="text" id="start-species"></div>
-                    <div class="form-group"><label>二分化性別 (ABO)</label>
-                        <select id="start-abo" onchange="togglePheromoneField('start')">
+                
+                <div style="height: 250px; overflow-y: auto; padding-right: 10px; border-top: 1px solid #ccc; padding-top:10px;">
+                    <div class="paper-group"><label>姓名</label><input type="text" id="start-name"></div>
+                    <div class="paper-group"><label>年齡</label><input type="text" id="start-age"></div>
+                    <div class="paper-group"><label>外貌特徵</label><textarea id="start-look" rows="2"></textarea></div>
+                    <div class="paper-group"><label>種族 / 第一性別</label><input type="text" id="start-species"></div>
+                    <div class="paper-group"><label>二分化性別 (ABO)</label>
+                        <select id="start-abo" onchange="togglePheromoneField()">
                             <option value="Alpha">Alpha</option><option value="Beta">Beta</option><option value="Omega">Omega</option>
                         </select>
                     </div>
-                    <div class="form-group" id="start-pheromone-group"><label>信息素</label><input type="text" id="start-pheromone"></div>
-                    <div class="form-group"><label>精神體型態</label><input type="text" id="start-spirit"></div>
-                    <div class="form-group"><label>精神圖景</label><input type="text" id="start-mind"></div>
-                    <div class="form-group"><label>哨兵等級</label>
+                    <div class="paper-group" id="start-pheromone-group"><label>信息素氣味</label><input type="text" id="start-pheromone"></div>
+                    <div class="paper-group"><label>精神體型態</label><input type="text" id="start-spirit"></div>
+                    <div class="paper-group"><label>精神圖景</label><input type="text" id="start-mind"></div>
+                    <div class="paper-group"><label>哨兵等級</label>
                         <select id="start-level"><option value="S級">S級</option><option value="A級">A級</option><option value="B級">B級</option><option value="C級">C級</option></select>
                     </div>
-                    <div class="form-group"><label>哨兵特殊能力</label><input type="text" id="start-ability"></div>
+                    <div class="paper-group"><label>特殊能力描述</label><textarea id="start-ability" rows="2"></textarea></div>
                 </div>
             </div>
         </div>
-        <button type="button" id="main-start-btn" class="start-btn" disabled onclick="startGame()">確認報到，進入第四區</button>
+        <button type="button" id="main-start-btn" class="start-btn" disabled onclick="startGame()">表單繳交完畢，進入第四區</button>
     </div>
 
     <!-- ================= 3. 遊戲介面 (標籤分頁式) ================= -->
     <div id="game-screen">
         
-        <!-- 頂部導覽與分頁 -->
         <div class="game-nav">
             <div class="tabs-container">
                 <button class="tab-btn active" onclick="switchTab('tab-chat')">💬 聊天行動區</button>
@@ -211,36 +240,36 @@
                 <button class="tab-btn" onclick="switchTab('tab-memory')">🧠 記憶後臺</button>
             </div>
             <div class="sys-actions">
-                <span id="save-status" style="font-size:0.85rem; color:#2ecc71; margin-right:10px; align-self:center;"></span>
-                <button class="sys-btn" onclick="saveGame()">💾 存檔</button>
-                <button class="sys-btn" onclick="loadGame()">📂 讀檔</button>
-                <button class="sys-btn" onclick="returnToSetup()">🔙 離開</button>
+                <button class="sys-btn" onclick="openModal('save')">💾 存檔</button>
+                <button class="sys-btn" onclick="openModal('load')">📂 讀檔</button>
+                <button class="sys-btn" style="background:#e74c3c; border-color:#c0392b;" onclick="returnToSetup()">🔙 離開</button>
             </div>
         </div>
 
         <!-- [標籤 1] 聊天行動區 -->
-        <div id="tab-chat" class="tab-content active" style="position: relative; flex-direction: row;">
+        <div id="tab-chat" class="tab-content active">
             
-            <!-- 懸浮迷你狀態面板 (僅顯示最新一筆) -->
+            <!-- 左側固定迷你狀態欄 -->
             <div class="left-mini-status">
-                <h4>最新狀態</h4>
-                <p><span class="lbl">時間</span><span id="mini-time">未知</span></p>
-                <p><span class="lbl">地點</span><span id="mini-loc">未知</span></p>
-                <p><span class="lbl">信任度</span><span id="mini-trust" style="color:#f39c12; font-weight:bold;">0</span></p>
-                <p><span class="lbl">進度</span><span>第 <span id="mini-page">0</span> 頁</span></p>
+                <h4>即時狀態</h4>
+                <div class="status-row"><span class="lbl">時間</span><span class="val" id="mini-time">未知</span></div>
+                <div class="status-row"><span class="lbl">地點</span><span class="val" id="mini-loc">未知</span></div>
+                <div class="status-row"><span class="lbl">信任度</span><span class="val val-highlight" id="mini-trust">0%</span></div>
+                <div class="status-row"><span class="lbl">興趣值</span><span class="val val-interest" id="mini-interest">0%</span></div>
+                <div class="status-row"><span class="lbl">進度</span><span class="val">第 <span id="mini-page">0</span> 頁</span></div>
             </div>
 
-            <!-- 聊天主視窗 -->
-            <div style="flex-grow: 1; display: flex; flex-direction: column; width: 100%;">
-                <div id="chat-box" style="padding-left: 260px;"></div>
+            <!-- 右側聊天主視窗 -->
+            <div class="chat-main-area">
+                <div id="chat-box"></div>
                 
                 <div id="loading-indicator">
-                    <div class="spinner"></div> <span>AI 運算中，請稍候...</span>
+                    <div class="spinner"></div> <span>系統運算中，請稍候...</span>
                 </div>
 
                 <div id="input-area">
-                    <textarea id="player-input" rows="3" placeholder="輸入您的行動，按 [Enter] 換行，按下 [Alt + Enter] 傳送..."></textarea>
-                    <button id="send-btn">傳送<br><span style="font-size: 0.7rem; font-weight:normal;">Alt+Enter</span></button>
+                    <textarea id="player-input" placeholder="輸入您的行動，按 [Enter] 換行，按下 [Alt + Enter] 傳送..."></textarea>
+                    <button id="send-btn">傳送<br><span style="font-size: 0.75rem; font-weight:normal; opacity:0.8;">Alt+Enter</span></button>
                 </div>
             </div>
         </div>
@@ -249,34 +278,29 @@
         <div id="tab-char" class="tab-content">
             <div class="char-grid">
                 
-                <!-- 左欄：狀態紀錄面板 (持續疊加) -->
+                <!-- 左欄：狀態紀錄面板 -->
                 <div class="char-panel">
-                    <h3>📊 狀態紀錄面板 (自動保留至記憶整理)</h3>
+                    <h3>📊 歷史狀態紀錄</h3>
+                    <p style="font-size:0.85rem; color:#8c8c8c; margin-top:0;">(每達25頁記憶整理後，僅保留最後兩筆紀錄)</p>
                     <div id="status-history-container" class="status-history-container">
-                        <div class="status-box" style="display:block; text-align:center; color:#a3a3c2;">等待系統連線以獲取狀態...</div>
+                        <div class="hist-box" style="display:block; text-align:center; color:#a3a3c2; border:none;">等待系統連線以獲取狀態...</div>
                     </div>
                 </div>
 
-                <!-- 中欄：玩家角色卡 (可隨時修改) -->
+                <!-- 中欄：玩家角色卡 (唯讀) -->
                 <div class="char-panel">
-                    <h3>📝 玩家角色卡 (您的設定)</h3>
+                    <h3>📝 玩家角色卡 (已鎖定)</h3>
                     <div style="flex-grow: 1; overflow-y: auto; padding-right: 10px;">
-                        <div class="form-group"><label>姓名</label><input type="text" id="game-name"></div>
-                        <div class="form-group"><label>年齡</label><input type="text" id="game-age"></div>
-                        <div class="form-group"><label>外貌</label><textarea id="game-look" rows="2"></textarea></div>
-                        <div class="form-group"><label>種族/性別</label><input type="text" id="game-species"></div>
-                        <div class="form-group"><label>ABO</label>
-                            <select id="game-abo" onchange="togglePheromoneField('game')">
-                                <option value="Alpha">Alpha</option><option value="Beta">Beta</option><option value="Omega">Omega</option>
-                            </select>
-                        </div>
-                        <div class="form-group" id="game-pheromone-group"><label>信息素</label><input type="text" id="game-pheromone"></div>
-                        <div class="form-group"><label>精神體</label><input type="text" id="game-spirit"></div>
-                        <div class="form-group"><label>精神圖景</label><input type="text" id="game-mind"></div>
-                        <div class="form-group"><label>等級</label>
-                            <select id="game-level"><option value="S級">S級</option><option value="A級">A級</option><option value="B級">B級</option><option value="C級">C級</option></select>
-                        </div>
-                        <div class="form-group"><label>特殊能力</label><textarea id="game-ability" rows="2"></textarea></div>
+                        <div><span class="readonly-label">姓名</span><div class="readonly-field" id="game-name"></div></div>
+                        <div><span class="readonly-label">年齡</span><div class="readonly-field" id="game-age"></div></div>
+                        <div><span class="readonly-label">外貌</span><div class="readonly-field" id="game-look" style="white-space: pre-wrap;"></div></div>
+                        <div><span class="readonly-label">種族/性別</span><div class="readonly-field" id="game-species"></div></div>
+                        <div><span class="readonly-label">二分化性別 (ABO)</span><div class="readonly-field" id="game-abo"></div></div>
+                        <div id="game-pheromone-group"><span class="readonly-label">信息素</span><div class="readonly-field" id="game-pheromone"></div></div>
+                        <div><span class="readonly-label">精神體</span><div class="readonly-field" id="game-spirit"></div></div>
+                        <div><span class="readonly-label">精神圖景</span><div class="readonly-field" id="game-mind"></div></div>
+                        <div><span class="readonly-label">等級</span><div class="readonly-field" id="game-level"></div></div>
+                        <div><span class="readonly-label">特殊能力</span><div class="readonly-field" id="game-ability" style="white-space: pre-wrap;"></div></div>
                     </div>
                 </div>
 
@@ -291,15 +315,14 @@
                         <p><strong>性格：</strong>表面幽默輕浮、嘴巴很毒，但其實非常細心且極度寵溺後輩。面對危機極度謹慎。</p>
                         <p><strong>特殊能力：</strong>喜好揮舞雙斧的近戰狂，口腔帶有神經毒腺。能施放範圍「毒沼」與抵擋攻擊的「保護盾」。</p>
                     </div>
-
                     <h3>👥 周邊角色介紹</h3>
                     <div class="npc-card">
                         <h4>葛斯特 (Ghost) - 精神體</h4>
-                        <p>艾柏特的精神體，一隻 26cm 長的變色龍。有著又呆又睿智的眼神，隱匿能力極強。艾柏特常派牠去惡作劇，或在信任度較低時潛伏監視玩家。</p>
+                        <p>艾柏特的精神體，一隻 26cm 長的變色龍。有著又呆又睿智的眼神，隱匿能力極強。常派去惡作劇，或在信任度較低時潛伏監視玩家。</p>
                     </div>
                     <div class="npc-card">
                         <h4>第四區同僚 / 教官</h4>
-                        <p>包含其他的哨兵與嚮導。對於艾柏特不按牌理出牌的狂野作風、以及對特定甜食（如麥芽糖）的極度嫌棄感到無奈，但又認可其 S 級的強大實力。</p>
+                        <p>包含其他的哨兵與嚮導。對艾柏特不按牌理出牌的狂野作風、以及對黏牙甜食的極度嫌棄感到無奈，但認可其強大實力。</p>
                     </div>
                 </div>
             </div>
@@ -324,19 +347,13 @@
         const introScreen = document.getElementById('intro-screen');
         const startScreen = document.getElementById('start-screen');
         
-        let introTimer = setTimeout(() => { finishIntro(); }, 4000);
-
         introScreen.addEventListener('click', () => {
-            clearTimeout(introTimer);
             finishIntro();
         });
 
         function finishIntro() {
-            introScreen.style.opacity = '0';
-            setTimeout(() => {
-                introScreen.style.display = 'none';
-                startScreen.style.display = 'flex';
-            }, 500); 
+            introScreen.style.display = 'none';
+            startScreen.style.display = 'flex';
         }
 
         // ---------------------------------------------------------
@@ -362,7 +379,7 @@
         let localApiUrl = '';
         let localModelName = '';
         let chatHistory = []; 
-        let statusHistoryLog = []; // 全新狀態歷史紀錄陣列
+        let statusHistoryLog = []; 
         let lastSummarizedPage = 0;
         let isApiConfirmed = false;
 
@@ -376,8 +393,8 @@
             document.getElementById('main-start-btn').disabled = true;
             
             const statusText = document.getElementById('api-status-text');
-            statusText.innerText = '參數已變更，請重新確認連線以解鎖建檔。';
-            statusText.style.color = '#e74c3c';
+            statusText.innerText = '【參數已變更，請重新確認連線】';
+            statusText.style.color = '#c0392b';
         }
 
         function confirmAPI() {
@@ -398,14 +415,14 @@
             document.getElementById('main-start-btn').disabled = false;
             
             const statusText = document.getElementById('api-status-text');
-            statusText.innerText = '✅ 連線已確認，請填寫右側角色卡。';
-            statusText.style.color = '#2ecc71';
+            statusText.innerText = '✅ 連線成功，已解鎖人員建檔表';
+            statusText.style.color = '#27ae60';
         }
 
-        function togglePheromoneField(prefix) {
-            const abo = document.getElementById(`${prefix}-abo`).value;
-            const group = document.getElementById(`${prefix}-pheromone-group`);
-            const input = document.getElementById(`${prefix}-pheromone`);
+        function togglePheromoneField() {
+            const abo = document.getElementById(`start-abo`).value;
+            const group = document.getElementById(`start-pheromone-group`);
+            const input = document.getElementById(`start-pheromone`);
             if (abo === 'Beta') {
                 group.style.display = 'none';
                 input.value = '無（Beta沒有信息素）';
@@ -428,9 +445,16 @@
             fields.forEach(f => {
                 const val = document.getElementById(`start-${f}`).value.trim();
                 if(!val && f !== 'pheromone') isValid = false; 
-                document.getElementById(`game-${f}`).value = val;
+                // 填入唯讀的 div 中
+                document.getElementById(`game-${f}`).innerText = val;
             });
-            togglePheromoneField('game');
+            // 處理遊戲介面中 Beta 信息素的隱藏
+            const gameAbo = document.getElementById('game-abo').innerText;
+            if(gameAbo === 'Beta') {
+                document.getElementById('game-pheromone-group').style.display = 'none';
+            } else {
+                document.getElementById('game-pheromone-group').style.display = 'block';
+            }
             return isValid;
         }
 
@@ -457,20 +481,20 @@
         }
 
         // ---------------------------------------------------------
-        // 4. AI 互動與邏輯 (深度防 OOC 提示)
+        // 4. AI 互動與邏輯 (防 OOC 與新數值限制)
         // ---------------------------------------------------------
         
         function buildSystemPrompt() {
-            const charData = `姓名：${document.getElementById('game-name').value}
-年齡：${document.getElementById('game-age').value}
-外貌：${document.getElementById('game-look').value}
-種族/性別：${document.getElementById('game-species').value}
-二分化性別：${document.getElementById('game-abo').value}
-信息素：${document.getElementById('game-pheromone').value}
-精神體型態：${document.getElementById('game-spirit').value}
-精神圖景：${document.getElementById('game-mind').value}
-哨兵等級：${document.getElementById('game-level').value}
-哨兵特殊能力：${document.getElementById('game-ability').value}`;
+            const charData = `姓名：${document.getElementById('game-name').innerText}
+年齡：${document.getElementById('game-age').innerText}
+外貌：${document.getElementById('game-look').innerText}
+種族/性別：${document.getElementById('game-species').innerText}
+二分化性別：${document.getElementById('game-abo').innerText}
+信息素：${document.getElementById('game-pheromone').innerText}
+精神體型態：${document.getElementById('game-spirit').innerText}
+精神圖景：${document.getElementById('game-mind').innerText}
+哨兵等級：${document.getElementById('game-level').innerText}
+哨兵特殊能力：${document.getElementById('game-ability').innerText}`;
 
             const memoryText = document.getElementById('memory-text').value.trim();
             const memorySection = memoryText ? `\n\n【背景記憶點】：\n${memoryText}` : "";
@@ -484,7 +508,7 @@
 - 外貌特徵：身高 196cm，體重 102kg，尾巴長 120cm。藍灰色眼睛，銀色側邊漸層髮型。臉部與身體有部分藍灰色鱗片覆蓋。舌頭很長且末端分叉，牙齒銳利呈鋸齒狀。
 - 核心性格：表面幽默、輕浮、開朗，講話很毒且嘴上不饒人，但內心其實很細心且極度「寵溺後輩（玩家）」。面對危機時非常謹慎。
 - 獸人本能與特殊生理：會用舌頭舔空氣感受周圍環境（能感知 9.5 公里外的腐爛氣息）。口腔有可自行開關的神經毒腺體，唾液具些微腐蝕性。極度注重口腔衛生（因怕毒到人，隨身帶解毒劑與治療藥水）。非常討厭會黏牙縫的甜食（如麥芽糖）。
-- 戰鬥風格：身為嚮導卻不待在後方，喜歡在前線揮舞雙斧近戰攻擊（偶爾吐毒液在斧頭上），並結合「透明藍灰色的精神觸手」壓制群怪或進行大腦破壞。特殊能力包含「毒沼」與「保護盾」。
+- 戰鬥風格：身為嚮導卻不待在後方，喜歡在前線揮舞雙斧近戰攻擊，並結合「透明藍灰色的精神觸手」壓制群怪。特殊能力包含「毒沼」與「保護盾」。
 - 精神體：名為「葛斯特」的變色龍（26cm長），眼神呆又睿智。隱匿能力極強，艾柏特信任度較低時，會派牠去監視玩家睡覺。
 - 說話方式：對玩家（後輩）帶有保護慾，喜歡惡趣味調侃，常用「小菜鳥」、「小哨兵」稱呼，常帶有輕微的嘆詞與語氣助詞。
 
@@ -495,8 +519,9 @@ ${charData}${memorySection}
 日期｜ YY/MM/DD 
 時間｜ HH:MM （24小時制）
 地點｜（依劇情變動） 
-艾柏特的穿著｜（依劇情及艾柏特喜好變動，他工作日會穿制服）
-艾柏特對你的信任度｜（依加減分機制變動）
+艾柏特的穿著｜（依劇情變動）
+艾柏特對你的信任度｜（數字%，起始0%，每次變動幅度約1%~5%）
+艾柏特對你的興趣值｜（數字%，起始0%，每次變動幅度約1%~5%）
 頁碼｜（數字，每次對話累加）`;
         }
 
@@ -505,7 +530,7 @@ ${charData}${memorySection}
             if(!syncCharDataToGame()) { alert("角色卡資料尚未填寫完整（信息素除外）。"); return; }
 
             chatHistory = []; 
-            statusHistoryLog = []; // 清空狀態紀錄
+            statusHistoryLog = []; 
             chatHistory.push({ role: 'system', content: buildSystemPrompt() });
 
             document.getElementById('start-screen').style.display = 'none';
@@ -550,9 +575,6 @@ ${charData}${memorySection}
             }
         }
 
-        // ---------------------------------------------------------
-        // ★ 核心強化：狀態紀錄面板與記憶整理連動
-        // ---------------------------------------------------------
         function extractAndUpdateStatus(text) {
             const regexes = {
                 date: /日期｜\s*(.*?)(?=\n|$)/,
@@ -560,10 +582,11 @@ ${charData}${memorySection}
                 loc: /地點｜\s*(.*?)(?=\n|$)/,
                 clothes: /艾柏特的穿著｜\s*(.*?)(?=\n|$)/,
                 trust: /(?:艾柏特對你的)?信任度｜\s*(.*?)(?=\n|$)/,
+                interest: /(?:艾柏特對你的)?興趣值｜\s*(.*?)(?=\n|$)/,
                 page: /頁碼｜\s*.*?(\d+)/
             };
 
-            let currentStatus = { date: '未知', time: '未知', loc: '未知', clothes: '未知', trust: '0', page: '0' };
+            let currentStatus = { date: '未知', time: '未知', loc: '未知', clothes: '未知', trust: '0%', interest: '0%', page: '0' };
             let foundPage = false;
 
             for(let key in regexes) {
@@ -576,24 +599,17 @@ ${charData}${memorySection}
 
             if(foundPage) {
                 let currentPage = parseInt(currentStatus.page, 10);
-                
-                // 1. 將當前狀態推入歷史紀錄陣列
                 statusHistoryLog.push(currentStatus);
 
-                // 2. 觸發記憶整理條件 (達到 25 的倍數頁)
                 if (currentPage > 0 && currentPage % 25 === 0 && currentPage !== lastSummarizedPage) {
                     lastSummarizedPage = currentPage;
                     autoSummarizeMemory(currentPage);
-                    
-                    // 【機制】：記憶整理後，裁切狀態面板紀錄，僅保留最後 2 頁的狀態
                     statusHistoryLog = statusHistoryLog.slice(-2);
                 }
-
-                // 3. 更新 UI (左側迷你面板 與 Tab 2 完整歷史面板)
                 renderStatusUI();
             }
 
-            // 清除回覆中的狀態文字以保持對話框乾淨
+            // 清除狀態列字樣以保持對話乾淨 (支援信任度與興趣值)
             return text.replace(/日期｜[\s\S]*?(?=頁碼｜)頁碼｜.*?(?:\n|$)/g, '').trim();
         }
 
@@ -601,25 +617,27 @@ ${charData}${memorySection}
             if (statusHistoryLog.length === 0) return;
             const latest = statusHistoryLog[statusHistoryLog.length - 1];
 
-            // 更新聊天區旁邊的迷你最新狀態面板
+            // 迷你面板
             document.getElementById('mini-time').innerText = latest.time;
             document.getElementById('mini-loc').innerText = latest.loc;
             document.getElementById('mini-trust').innerText = latest.trust;
+            document.getElementById('mini-interest').innerText = latest.interest;
             document.getElementById('mini-page').innerText = latest.page;
 
-            // 更新 Tab 2 中的狀態歷史紀錄列表
+            // 歷史狀態面板
             const container = document.getElementById('status-history-container');
             container.innerHTML = '';
             statusHistoryLog.forEach(st => {
                 const box = document.createElement('div');
-                box.className = 'status-box';
+                box.className = 'hist-box';
                 box.innerHTML = `
-                    <div><span>日期｜</span><span style="color:#fff;">${st.date}</span></div>
-                    <div><span>時間｜</span><span style="color:#fff;">${st.time}</span></div>
-                    <div><span>地點｜</span><span style="color:#fff;">${st.loc}</span></div>
-                    <div><span>頁碼｜</span><span style="color:#fff;">${st.page}</span></div>
-                    <div style="grid-column: 1 / -1;"><span>穿著｜</span><span style="color:#fff;">${st.clothes}</span></div>
-                    <div style="grid-column: 1 / -1; color:#f39c12;"><span>信任度｜</span><span style="color:#f39c12;">${st.trust}</span></div>
+                    <div><span class="lbl">日期</span><span style="color:#fff;">${st.date}</span></div>
+                    <div><span class="lbl">時間</span><span style="color:#fff;">${st.time}</span></div>
+                    <div><span class="lbl">地點</span><span style="color:#fff;">${st.loc}</span></div>
+                    <div><span class="lbl">頁碼</span><span style="color:#fff;">${st.page}</span></div>
+                    <div style="grid-column: 1 / -1;"><span class="lbl">穿著</span><span style="color:#fff;">${st.clothes}</span></div>
+                    <div><span class="lbl">信任度</span><span style="color:#f39c12; font-weight:bold;">${st.trust}</span></div>
+                    <div><span class="lbl">興趣值</span><span style="color:#e74c3c; font-weight:bold;">${st.interest}</span></div>
                 `;
                 container.appendChild(box);
             });
@@ -638,7 +656,12 @@ ${charData}${memorySection}
                 const newMem = `\n\n【第 ${page} 頁紀錄】：\n${summary.trim()}`;
                 memEl.value = (memEl.value + newMem).trim();
                 appendSystemText(`系統提示：第 ${page} 頁重要記憶已更新至【記憶後臺】。`);
-                saveGame();
+                
+                // 自動更新到 localStorage
+                let saves = Object.keys(localStorage).filter(k => k.startsWith('sentrySave_'));
+                if(saves.length > 0) {
+                    // 如果沒有特定名稱，這只是背景備份，但因為有自訂檔名，我們先不強制覆寫，留給玩家手動存
+                }
             } catch(e) {
                 appendSystemText(`後台記憶整理失敗：${e.message}`);
             }
@@ -646,7 +669,6 @@ ${charData}${memorySection}
         
         function forceSummarize() {
             const p = document.getElementById('mini-page').innerText;
-            // 若為手動觸發，亦同時裁切歷史狀態
             statusHistoryLog = statusHistoryLog.slice(-2);
             renderStatusUI();
             autoSummarizeMemory(parseInt(p) || 1);
@@ -693,42 +715,99 @@ ${charData}${memorySection}
         }
 
         // ---------------------------------------------------------
-        // 5. 存檔與讀檔
+        // 5. 存檔與讀檔 (自訂名稱 Modal)
         // ---------------------------------------------------------
-        function saveGame() {
+        let currentModalMode = '';
+
+        function openModal(mode) {
+            currentModalMode = mode;
+            const modal = document.getElementById('sl-modal');
+            const title = document.getElementById('sl-title');
+            const list = document.getElementById('sl-list');
+            const actionArea = document.getElementById('sl-action-area');
+            
+            list.innerHTML = '';
+            actionArea.innerHTML = '';
+            modal.style.display = 'flex';
+            
+            const saves = Object.keys(localStorage).filter(k => k.startsWith('sentrySave_'));
+            
+            if (mode === 'save') {
+                title.innerText = '💾 建立新存檔';
+                actionArea.innerHTML = `
+                    <input type="text" id="save-name-input" class="sl-input" placeholder="請輸入存檔名稱 (例如：第一天)" />
+                    <button class="sys-btn" style="width:100%; margin-top:10px;" onclick="executeSave()">確認存檔</button>
+                `;
+                saves.forEach(k => {
+                    const name = k.replace('sentrySave_', '');
+                    const div = document.createElement('div');
+                    div.className = 'sl-item';
+                    div.innerHTML = `<span class="sl-item-name">${name}</span><span>(點擊覆寫)</span>`;
+                    div.onclick = () => { document.getElementById('save-name-input').value = name; };
+                    list.appendChild(div);
+                });
+            } else if (mode === 'load') {
+                title.innerText = '📂 讀取存檔';
+                if(saves.length === 0) {
+                    list.innerHTML = '<div style="color:#8c8c8c; text-align:center;">目前沒有任何存檔。</div>';
+                } else {
+                    saves.forEach(k => {
+                        const name = k.replace('sentrySave_', '');
+                        const div = document.createElement('div');
+                        div.className = 'sl-item';
+                        div.innerHTML = `<span class="sl-item-name">${name}</span><span>讀取 ➔</span>`;
+                        div.onclick = () => executeLoad(name);
+                        list.appendChild(div);
+                    });
+                }
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('sl-modal').style.display = 'none';
+        }
+
+        function executeSave() {
+            const nameInput = document.getElementById('save-name-input');
+            const name = nameInput ? nameInput.value.trim() : '';
+            if(!name) { alert("請輸入存檔名稱！"); return; }
+            
             try {
                 const saveData = {
                     aiProvider: selectedAI,
                     geminiApiKey, localApiUrl, localModelName,
-                    chatHistory, lastSummarizedPage,
-                    statusHistoryLog, // 保存歷史陣列
+                    chatHistory, lastSummarizedPage, statusHistoryLog,
                     memoryText: document.getElementById('memory-text').value,
                     charData: {
-                        name: document.getElementById('game-name').value,
-                        age: document.getElementById('game-age').value,
-                        look: document.getElementById('game-look').value,
-                        species: document.getElementById('game-species').value,
-                        abo: document.getElementById('game-abo').value,
-                        pheromone: document.getElementById('game-pheromone').value,
-                        spirit: document.getElementById('game-spirit').value,
-                        mind: document.getElementById('game-mind').value,
-                        level: document.getElementById('game-level').value,
-                        ability: document.getElementById('game-ability').value
+                        name: document.getElementById('game-name').innerText,
+                        age: document.getElementById('game-age').innerText,
+                        look: document.getElementById('game-look').innerText,
+                        species: document.getElementById('game-species').innerText,
+                        abo: document.getElementById('game-abo').innerText,
+                        pheromone: document.getElementById('game-pheromone').innerText,
+                        spirit: document.getElementById('game-spirit').innerText,
+                        mind: document.getElementById('game-mind').innerText,
+                        level: document.getElementById('game-level').innerText,
+                        ability: document.getElementById('game-ability').innerText
                     }
                 };
-                localStorage.setItem('sentryGuideSave', JSON.stringify(saveData));
+                localStorage.setItem('sentrySave_' + name, JSON.stringify(saveData));
+                closeModal();
+                
                 const sText = document.getElementById('save-status');
-                sText.innerText = `已存檔 (${new Date().toLocaleTimeString()})`;
-                setTimeout(() => sText.innerText = '', 3000);
-            } catch(e) {
-                alert("存檔失敗：" + e.message);
-            }
+                if(sText) {
+                    sText.innerText = `已存檔: ${name}`;
+                    setTimeout(() => sText.innerText = '', 3000);
+                } else {
+                    alert(`存檔成功：${name}`);
+                }
+            } catch(e) { alert("存檔失敗：" + e.message); }
         }
 
-        function loadGame(fromStartScreen = false) {
+        function executeLoad(name) {
             try {
-                const dataStr = localStorage.getItem('sentryGuideSave');
-                if(!dataStr) { alert("沒有找到存檔紀錄！"); return; }
+                const dataStr = localStorage.getItem('sentrySave_' + name);
+                if(!dataStr) { alert("檔案不存在！"); return; }
                 const data = JSON.parse(dataStr);
                 
                 selectedAI = data.aiProvider;
@@ -740,37 +819,46 @@ ${charData}${memorySection}
                 statusHistoryLog = data.statusHistoryLog || [];
                 isApiConfirmed = true; 
                 
+                // 還原角色卡資料
                 const fields = ['name', 'age', 'look', 'species', 'abo', 'pheromone', 'spirit', 'mind', 'level', 'ability'];
                 fields.forEach(f => {
-                    document.getElementById(`game-${f}`).value = data.charData[f];
-                    document.getElementById(`start-${f}`).value = data.charData[f];
+                    if(document.getElementById(`start-${f}`)) document.getElementById(`start-${f}`).value = data.charData[f];
+                    if(document.getElementById(`game-${f}`)) document.getElementById(`game-${f}`).innerText = data.charData[f];
                 });
-                togglePheromoneField('game');
                 
-                document.getElementById('memory-text').value = data.memoryText || "";
+                // 處理隱藏 Beta 信息素
+                if(document.getElementById('start-abo')) togglePheromoneField();
+                if(data.charData['abo'] === 'Beta' && document.getElementById('game-pheromone-group')) {
+                    document.getElementById('game-pheromone-group').style.display = 'none';
+                } else if(document.getElementById('game-pheromone-group')) {
+                    document.getElementById('game-pheromone-group').style.display = 'block';
+                }
+                
+                if(document.getElementById('memory-text')) document.getElementById('memory-text').value = data.memoryText || "";
 
-                chatBox.innerHTML = '';
-                chatHistory.forEach(msg => {
-                    if(msg.role === 'user' && !msg.content.includes("請進行開場")) appendMessage('user', msg.content);
-                    if(msg.role === 'assistant') {
-                        const cleanTxt = msg.content.replace(/日期｜[\s\S]*?(?=頁碼｜)頁碼｜.*?(?:\n|$)/g, '').trim();
-                        appendMessage('assistant', cleanTxt);
-                    }
-                });
+                if(document.getElementById('chat-box')) {
+                    chatBox.innerHTML = '';
+                    chatHistory.forEach(msg => {
+                        if(msg.role === 'user' && !msg.content.includes("請進行開場")) appendMessage('user', msg.content);
+                        if(msg.role === 'assistant') {
+                            const cleanTxt = msg.content.replace(/日期｜[\s\S]*?(?=頁碼｜)頁碼｜.*?(?:\n|$)/g, '').trim();
+                            appendMessage('assistant', cleanTxt);
+                        }
+                    });
+                }
                 
-                // 還原狀態 UI
                 renderStatusUI();
+                closeModal();
 
-                appendSystemText('系統提示：讀檔成功。');
-
-                if(fromStartScreen) {
+                // 若在大廳讀檔，則自動進入遊戲介面
+                if (document.getElementById('start-screen').style.display !== 'none') {
                     document.getElementById('start-screen').style.display = 'none';
                     document.getElementById('game-screen').style.display = 'flex';
                     switchTab('tab-chat');
+                } else {
+                    appendSystemText(`系統提示：已成功讀取存檔 [${name}]。`);
                 }
-            } catch(e) {
-                alert("讀取檔案失敗：" + e.message);
-            }
+            } catch(e) { alert("讀取檔案失敗：" + e.message); }
         }
 
         // ---------------------------------------------------------
@@ -798,7 +886,7 @@ ${charData}${memorySection}
         // 7. 文字辨識模組
         // ---------------------------------------------------------
         async function parseCharacterText() {
-            if(!isApiConfirmed) { alert("請先在左側完成【系統連線】並確認，才能使用AI辨識功能。"); return; }
+            if(!isApiConfirmed) { alert("請先在左側完成【系統連線】並簽署確認，才能使用AI辨識功能。"); return; }
             const rawText = document.getElementById('char-parse-text').value.trim();
             const statusDiv = document.getElementById('parse-status');
             if (!rawText) { statusDiv.innerText = "請先貼上角色設定文字。"; return; }
@@ -838,13 +926,13 @@ Key清單: name, age, look, species, abo, pheromone, spirit, mind, level, abilit
                     };
                     setSelect('start-abo', parsedData.abo);
                     setSelect('start-level', parsedData.level);
-                    togglePheromoneField('start');
+                    togglePheromoneField();
                     statusDiv.innerText = "辨識成功！請確認欄位內容。";
-                    statusDiv.style.color = "#2ecc71";
+                    statusDiv.style.color = "#27ae60";
                 } else throw new Error("無法解析 JSON。");
             } catch (err) {
                 statusDiv.innerText = "辨識失敗：" + err.message;
-                statusDiv.style.color = "#e74c3c";
+                statusDiv.style.color = "#c0392b";
             }
         }
     </script>
